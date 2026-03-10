@@ -19,10 +19,10 @@ const ASSETS = {
   howIconOptimize: "/illustration-icons-lp-svg/illustration-how-it-works-three.svg",
   howIconExport: "/illustration-icons-lp-svg/illustration-how-it-works-four.svg",
   howIllustration: "/illustration-icons-lp-svg/illustration-sapien-how-it-works-one.svg",
-  cleanTemplateScreen: "/illustration-icons-lp-svg/sapien-video.svg",
+  cleanTemplateScreen: "/illustration-icons-lp-svg/cvsapien-print.png",
   limitedOfferBadge: "/illustration-icons-lp-svg/illustration-limited-offer.svg",
-  check: "/figma/check.svg",
-  cross: "/figma/cross.svg",
+  check: "/illustration-icons-lp-svg/Check.svg",
+  cross: "/illustration-icons-lp-svg/X.svg",
   aiIcon: "/illustration-icons-lp-svg/illustration-impact-four.svg",
   jdIcon: "/illustration-icons-lp-svg/illustration-impact-five.svg",
   atsIcon: "/illustration-icons-lp-svg/illustration-impact-six.svg",
@@ -115,7 +115,7 @@ function HeroSection() {
         <img src={ASSETS.heroShapeTwo} alt="" aria-hidden className="absolute right-0 top-[238px] h-[188px] w-[182px]" />
         <img src={ASSETS.heroSapienHappy} alt="" aria-hidden className="absolute left-0 top-[228px] h-[189px] w-[257px]" />
         <img src={ASSETS.heroShapeThree} alt="" aria-hidden className="absolute left-[106px] top-[424px] h-[184px] w-[184px]" />
-        <img src={ASSETS.heroSapienSad} alt="" aria-hidden className="absolute right-1 bottom-0 h-[227px] w-[310px]" />
+        <img src={ASSETS.heroSapienThinking} alt="" aria-hidden className="absolute right-2 bottom-0 h-[255px] w-[278px]" />
       </div>
     </section>
   );
@@ -143,17 +143,21 @@ const problemCards: Array<{ title: string; description: string; image: string }>
 
 function ProblemSection() {
   return (
-    <section id="about" className="bg-[#F6E4D2] py-16">
+    <section id="about" className="bg-[#F6E4D2] py-16 lg:py-20">
       <div className="section-wrap">
         <h2 className="mx-auto max-w-[604px] text-center text-[42px] leading-[1.05] sm:text-[60px]">Most resumes never reach a human</h2>
-        <div className="mt-16 grid gap-12 lg:grid-cols-3">
+        <div className="mt-16 grid justify-center gap-12 lg:grid-cols-3 lg:gap-[184px]">
           {problemCards.map((card) => (
-            <article key={card.title} className="text-center">
-              <div className="mx-auto w-fit rounded-[30px] bg-[var(--white)]/65 p-3">
+            <article key={card.title} className="w-[265px] text-center">
+              <div className="mx-auto w-[246px]">
                 <img src={card.image} alt={card.title} width={246} height={298} />
               </div>
               <h3 className="mt-6 text-[24px] tracking-[0.5px]">{card.title}</h3>
-              <p className="mx-auto mt-2 max-w-[265px] text-[18px] leading-[1.4]">{card.description}</p>
+              <p className="mx-auto mt-2 max-w-[265px] text-[18px] leading-[1.4]">
+                {card.title === "Generic Content"
+                  ? "“Worked on backend systems” is not enough. Impact, metrics and relevant skills matter."
+                  : card.description}
+              </p>
             </article>
           ))}
         </div>
@@ -171,29 +175,30 @@ const howSteps = [
 
 function HowItWorksSection() {
   return (
-    <section id="features" className="section-wrap py-20">
+    <section id="features" className="section-wrap py-20 lg:py-24">
       <h2 className="mx-auto max-w-[697px] text-center text-[42px] leading-[1.05] sm:text-[60px]">From draft to optimized resume in minutes</h2>
-      <div className="mt-16 grid items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
-        <ul className="space-y-8">
+      <div className="mt-16 grid items-center gap-12 lg:grid-cols-[1fr_701px]">
+        <ul className="space-y-10">
           {howSteps.map((step, index) => (
             <li key={step.text} className="relative flex items-center gap-6">
               <img src={step.icon} alt="" aria-hidden width={31} height={31} />
               <span className="font-[var(--font-zilla-slab)] text-[24px] leading-[1.45] tracking-[0.5px]">{step.text}</span>
               {index === 0 && (
-                <span className="absolute -bottom-2 left-[44px] h-0.5 w-[160px] rounded bg-[var(--coral-orange)]" />
+                <>
+                  <span className="absolute -bottom-[18px] left-[44px] h-[2px] w-[160px] rounded bg-[var(--coral-orange)]" />
+                  <span className="absolute -bottom-[18px] left-[203px] h-[2px] w-[300px] rounded bg-[var(--slate-grey)]" />
+                </>
               )}
             </li>
           ))}
         </ul>
-        <div className="rounded-[41px] border-2 border-[var(--slate-grey)] bg-[var(--coral-orange)] p-6 lg:p-10">
-          <div className="grid items-center gap-6 sm:grid-cols-[220px_1fr]">
-            <div className="rounded-[32px] border border-[var(--slate-grey)] bg-[var(--chalk-white)] p-2">
-              <img src={ASSETS.howIllustration} alt="How CV Sapiens works" width={388} height={439} />
-            </div>
-            <p className="font-[var(--font-zilla-slab)] text-[34px] leading-[1.2] tracking-[0.5px]">
-              Choose a template and fill your experience, or paste your existing content
-            </p>
+        <div className="relative h-[555px] w-full rounded-[41px] border-2 border-[var(--slate-grey)] bg-[var(--coral-orange)]">
+          <div className="absolute -left-[68px] top-[30px] h-[439px] w-[388px] rounded-[32px] border border-[var(--slate-grey)] bg-[var(--chalk-white)] p-2">
+            <img src={ASSETS.howIllustration} alt="How CV Sapiens works" width={388} height={439} />
           </div>
+          <p className="absolute left-[362px] top-[146px] w-[307px] font-[var(--font-zilla-slab)] text-[38px] leading-[1.2] tracking-[0.5px]">
+            Choose a template and fill your experience, or paste your existing content
+          </p>
         </div>
       </div>
     </section>
@@ -213,7 +218,13 @@ function TemplateSection() {
           <div className="absolute left-2 top-2 z-10 w-[120px] sm:w-[191px]">
             <img src={ASSETS.limitedOfferBadge} alt="Limited offer badge" width={191} height={191} />
           </div>
-          <img src={ASSETS.cleanTemplateScreen} alt="CV Sapiens template editor screenshot" width={846} height={565} className="rounded-[32px] border border-[var(--slate-grey)]" />
+          <img
+            src={ASSETS.cleanTemplateScreen}
+            alt="CV Sapiens template editor screenshot"
+            width={1218}
+            height={590}
+            className="rounded-[32px] border border-[var(--slate-grey)]"
+          />
         </div>
       </div>
     </section>
