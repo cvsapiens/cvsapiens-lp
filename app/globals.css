@@ -1,26 +1,72 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --chalk-pink: #f2a7be;
+  --sienna-red: #dc4240;
+  --slate-grey: #1e1e1e;
+  --windjammer-blue: #61a5df;
+  --coral-orange: #e46846;
+  --pistachio: #aee7c3;
+  --raspberry: #c3386c;
+  --daffodil: #ffd168;
+  --white: #ffffff;
+  --green: #5dae71;
+  --chalk-white: #f3efeb;
+  --background: #f8eada;
+  --coral-hover: #f6d8cf;
+  --grey: #6f6f6f;
+  --max-content-width: 1280px;
+  --font-zilla-slab: "Zilla Slab";
+  --font-titillium-web: "Titillium Web";
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-foreground: var(--slate-grey);
+  --font-sans: var(--font-titillium-web);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--chalk-white);
+  color: var(--slate-grey);
+  font-family: var(--font-titillium-web), sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-zilla-slab), serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section-wrap {
+  width: min(100% - 2rem, var(--max-content-width));
+  margin-inline: auto;
+}
+
+.reveal {
+  animation: reveal-up 400ms ease-out both;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
