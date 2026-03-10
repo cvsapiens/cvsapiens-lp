@@ -70,3 +70,26 @@ a {
     transform: translateY(0);
   }
 }
+
+.shape-three-rotator {
+  display: grid;
+  place-items: center;
+  transform-origin: center center;
+  will-change: transform;
+  animation: shape-three-spin 18s linear infinite;
+}
+
+@keyframes shape-three-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shape-three-rotator {
+    animation: none;
+  }
+}

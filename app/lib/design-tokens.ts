@@ -26,7 +26,7 @@ export const TYPOGRAPHY_TOKENS = {
   "sub-header-medium": {
     family: "var(--font-zilla-slab)",
     size: "24px",
-    weight: 400,
+    weight: 500,
     lineHeight: 1.45,
     letterSpacing: "0.5px",
   },
