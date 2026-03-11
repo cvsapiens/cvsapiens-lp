@@ -1,7 +1,7 @@
- "use client";
+"use client";
 
 import Link from "next/link";
-import { ReactNode, startTransition, useEffect, useState } from "react";
+import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { COLOR_TOKENS } from "./lib/design-tokens";
 
 const ASSETS = {
@@ -182,13 +182,14 @@ function ProblemSection() {
   );
 }
 
-const HOW_IT_WORKS_STEP_DURATION_MS = 3200;
+const HOW_IT_WORKS_STEP_DURATION_MS = 5500;
 
 const howSteps = [
   {
     text: "Create or import your resume",
     icon: ASSETS.howIconResume,
     panelColor: "bg-[var(--coral-orange)]",
+    progressColor: "bg-[var(--coral-orange)]",
     illustration: ASSETS.howIllustrationOne,
     description: "Choose a template and fill your experience, or paste your existing content",
     descriptionWidth: "w-[307px]",
@@ -197,6 +198,7 @@ const howSteps = [
     text: "Upload the job description",
     icon: ASSETS.howIconJob,
     panelColor: "bg-[var(--chalk-pink)]",
+    progressColor: "bg-[var(--chalk-pink)]",
     illustration: ASSETS.howIllustrationTwo,
     description: "We analyze the role and extract key requirements and skills",
     descriptionWidth: "w-[307px]",
@@ -205,6 +207,7 @@ const howSteps = [
     text: "Optimize with AI",
     icon: ASSETS.howIconOptimize,
     panelColor: "bg-[var(--windjammer-blue)]",
+    progressColor: "bg-[var(--windjammer-blue)]",
     illustration: ASSETS.howIllustrationThree,
     description: "Keyword gap analysis, tailored suggestions per job and much more improvements",
     descriptionWidth: "w-[307px]",
@@ -213,6 +216,7 @@ const howSteps = [
     text: "Export and apply",
     icon: ASSETS.howIconExport,
     panelColor: "bg-[var(--daffodil)]",
+    progressColor: "bg-[var(--daffodil)]",
     illustration: ASSETS.howIllustrationFour,
     description: "Download a clean, ATS-friendly PDF",
     descriptionWidth: "w-[232px]",
@@ -221,71 +225,139 @@ const howSteps = [
 
 function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState(0);
+  const [cycleKey, setCycleKey] = useState(0);
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const progressOverlayRef = useRef<HTMLDivElement | null>(null);
+  const stepLabelRefs = useRef<Array<HTMLSpanElement | null>>([]);
+  const panelTextRef = useRef<HTMLParagraphElement | null>(null);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      startTransition(() => {
-        setActiveStep((currentStep) => (currentStep + 1) % howSteps.length);
-      });
+    const timer = window.setTimeout(() => {
+      setActiveStep((currentStep) => (currentStep + 1) % howSteps.length);
+      setCycleKey((currentKey) => currentKey + 1);
     }, HOW_IT_WORKS_STEP_DURATION_MS);
 
     return () => {
-      window.clearInterval(timer);
+      window.clearTimeout(timer);
     };
-  }, []);
+  }, [activeStep, cycleKey]);
+
+  function restartStep(stepIndex: number) {
+    setActiveStep(stepIndex);
+    setCycleKey((currentKey) => currentKey + 1);
+  }
 
   const currentStep = howSteps[activeStep];
+
+  useLayoutEffect(() => {
+    const grid = gridRef.current;
+    const overlay = progressOverlayRef.current;
+    const activeLabel = stepLabelRefs.current[activeStep];
+    const panelText = panelTextRef.current;
+
+    if (!grid || !overlay || !activeLabel || !panelText) {
+      return;
+    }
+
+    const updateProgressLine = () => {
+      const gridRect = grid.getBoundingClientRect();
+      const labelRect = activeLabel.getBoundingClientRect();
+      const panelTextRect = panelText.getBoundingClientRect();
+
+      const left = labelRect.left - gridRect.left;
+      const top = labelRect.bottom - gridRect.top + 8;
+      const width = Math.max(0, panelTextRect.left - gridRect.left - left);
+
+      overlay.style.setProperty("--how-it-works-line-left", `${left}px`);
+      overlay.style.setProperty("--how-it-works-line-top", `${top}px`);
+      overlay.style.setProperty("--how-it-works-line-width", `${width}px`);
+    };
+
+    updateProgressLine();
+
+    const resizeObserver = new ResizeObserver(updateProgressLine);
+    resizeObserver.observe(grid);
+    resizeObserver.observe(activeLabel);
+    resizeObserver.observe(panelText);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [activeStep, currentStep.descriptionWidth]);
 
   return (
     <section id="features" className="section-wrap py-20 lg:py-24">
       <h2 className="mx-auto max-w-[697px] text-center text-[42px] leading-[1.05] sm:text-[60px]">From draft to optimized resume in minutes</h2>
-      <div className="mt-16 grid items-center gap-12 lg:grid-cols-[1fr_701px]">
-        <ul className="space-y-16">
+      <div ref={gridRef} className="relative mt-16 grid items-center gap-12 lg:grid-cols-[1fr_701px]">
+        <div ref={progressOverlayRef} className="pointer-events-none absolute inset-0 hidden lg:block">
+          <span
+            className="absolute h-[2px] rounded-full bg-[var(--slate-grey)]"
+            style={{
+              left: "var(--how-it-works-line-left)",
+              top: "var(--how-it-works-line-top)",
+              width: "var(--how-it-works-line-width)",
+            }}
+          />
+          <span
+            className="absolute h-[4px] overflow-hidden rounded-full"
+            style={{
+              left: "var(--how-it-works-line-left)",
+              top: "calc(var(--how-it-works-line-top) - 1px)",
+              width: "var(--how-it-works-line-width)",
+            }}
+          >
+            <span
+              key={`${activeStep}-${cycleKey}`}
+              className={cn("how-it-works-progress block h-full", currentStep.progressColor)}
+              style={{
+                animationDuration: `${HOW_IT_WORKS_STEP_DURATION_MS}ms`,
+              }}
+            />
+          </span>
+        </div>
+        <ul className="relative z-10 space-y-16">
           {howSteps.map((step, index) => (
             <li key={step.text}>
               <button
                 type="button"
-                onClick={() =>
-                  startTransition(() => {
-                    setActiveStep(index);
-                  })
-                }
-                className="group flex items-start gap-[30px] text-left"
+                onClick={() => restartStep(index)}
+                className="group flex cursor-pointer items-start gap-[30px] text-left"
                 aria-pressed={index === activeStep}
               >
                 <img src={step.icon} alt="" aria-hidden width={31} height={32} className="mt-[2px] h-auto w-[31px] shrink-0" />
-                <span className="relative block pb-[10px] font-[var(--font-zilla-slab)] font-medium text-[24px] leading-[1.45] tracking-[0.5px]">
+                <span
+                  ref={(element) => {
+                    stepLabelRefs.current[index] = element;
+                  }}
+                  className="block font-[var(--font-zilla-slab)] font-medium text-[24px] leading-[1.45] tracking-[0.5px] transition-colors duration-200 group-hover:text-[#626262]"
+                >
                   {step.text}
-                  {index === activeStep && (
-                    <span className="pointer-events-none absolute left-0 top-full mt-[8px] h-[2px] w-[223px] bg-[var(--slate-grey)]">
-                      <span
-                        className="absolute inset-y-0 left-0 bg-[var(--coral-orange)] transition-transform ease-linear"
-                        style={{
-                          width: "223px",
-                          transform: "scaleX(1)",
-                          transformOrigin: "left center",
-                          transitionDuration: `${HOW_IT_WORKS_STEP_DURATION_MS}ms`,
-                        }}
-                        key={activeStep}
-                      />
-                    </span>
-                  )}
                 </span>
               </button>
             </li>
           ))}
         </ul>
-        <div className={cn("relative h-[555px] w-full rounded-[41px] border-2 border-[var(--slate-grey)]", currentStep.panelColor)}>
-          <img
-            src={currentStep.illustration}
-            alt="How CV Sapiens works"
-            width={388}
-            height={439}
-            className="absolute -left-[68px] top-[30px] h-[439px] w-[388px]"
-          />
-          <p className={cn("absolute left-[362px] top-[146px] font-[var(--font-zilla-slab)] text-[38px] leading-[1.2] tracking-[0.5px]", currentStep.descriptionWidth)}>
-            {currentStep.description}
-          </p>
+        <div
+          className={cn(
+            "relative z-10 h-[555px] w-full rounded-[41px] border-2 border-[var(--slate-grey)] transition-colors duration-500 ease-out",
+            currentStep.panelColor,
+          )}
+        >
+          <div key={`${activeStep}-${cycleKey}`} className="how-it-works-card-content absolute inset-0">
+            <img
+              src={currentStep.illustration}
+              alt="How CV Sapiens works"
+              width={388}
+              height={439}
+              className="absolute -left-[68px] top-[30px] h-[439px] w-[388px]"
+            />
+            <p
+              ref={panelTextRef}
+              className={cn("absolute left-[362px] top-[146px] font-[var(--font-zilla-slab)] text-[38px] leading-[1.2] tracking-[0.5px]", currentStep.descriptionWidth)}
+            >
+              {currentStep.description}
+            </p>
+          </div>
         </div>
       </div>
     </section>
