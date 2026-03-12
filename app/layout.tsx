@@ -20,7 +20,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Zilla+Slab:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500&display=swap"
         />
       </head>
       <body className="antialiased">{children}</body>
