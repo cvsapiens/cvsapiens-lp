@@ -39,7 +39,7 @@ const ASSETS = {
   footerShapes: "/illustration-icons-lp-svg/illustration-footer.svg",
 } as const;
 
-type ButtonVariant = "primary" | "secondary" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "tertiary";
 
 type ActionButtonProps = {
   children: ReactNode;
@@ -68,10 +68,11 @@ function ActionButton({ children, variant = "primary", href = "#", className }: 
     "inline-flex min-h-[52px] items-center justify-center rounded-[43px] px-8 font-normal text-[18px] leading-[1.4] tracking-[0.2px] transition-colors duration-200";
   const styles: Record<ButtonVariant, string> = {
     primary:
-      "bg-[var(--slate-grey)] text-[var(--white)] [text-shadow:0_1px_0_rgba(0,0,0,0.32)] hover:bg-[var(--coral-orange)] hover:text-[var(--white)]",
+      "bg-[var(--slate-grey)] !text-[var(--white)] [text-shadow:0_1px_0_rgba(0,0,0,0.32)] hover:bg-[var(--coral-orange-hover)] hover:!text-[var(--white)]",
     secondary:
-      "border border-[var(--slate-grey)] bg-transparent text-[var(--slate-grey)] hover:bg-[var(--coral-orange-wash)]",
-    ghost: "text-[var(--slate-grey)] hover:text-[var(--coral-orange)]",
+      "border border-[var(--slate-grey)] text-[var(--slate-grey)] bg-transparent hover:border-[var(--slate-grey)] hover:bg-[var(--coral-orange-soft)] hover:text-[var(--slate-grey)]",
+    tertiary:
+      "min-h-0 rounded-none px-0 !text-[var(--slate-grey)] hover:!text-[var(--coral-orange-hover)]",
   };
 
   return (
@@ -94,7 +95,7 @@ function Navbar() {
         <Logo />
         <nav className="hidden items-center gap-8 lg:flex">
           {["About", "Features", "Pricing", "FAQ"].map((item) => (
-            <ActionButton key={item} variant="ghost" className="min-h-0 px-0 text-[18px]" href={`#${item.toLowerCase()}`}>
+            <ActionButton key={item} variant="tertiary" className="text-[18px]" href={`#${item.toLowerCase()}`}>
               {item}
             </ActionButton>
           ))}
@@ -178,7 +179,7 @@ function ProblemSection() {
             className="absolute right-0 top-4 hidden w-[494px] max-w-[45%] lg:block"
           />
         </div>
-        <div className="mx-auto mt-14 grid max-w-[1126px] gap-6 lg:grid-cols-3">
+        <div className="mx-auto mt-14 grid max-w-[1126px] justify-center gap-8 lg:grid-cols-3 lg:gap-[118px]">
           {problemCards.map((card) => (
             <article
               key={card.title}
@@ -639,19 +640,37 @@ function FooterSection() {
         </div>
         <div className="grid gap-10 text-[18px] leading-[1.43] md:grid-cols-3 md:gap-[79px]">
           <div className="space-y-6">
-            <Link href="#">Link Button</Link>
-            <Link href="#">Link Button</Link>
-            <Link href="#">Terms</Link>
-            <Link href="#">Privacy</Link>
+            <ActionButton variant="tertiary" href="#">
+              Link Button
+            </ActionButton>
+            <ActionButton variant="tertiary" href="#">
+              Link Button
+            </ActionButton>
+            <ActionButton variant="tertiary" href="#">
+              Terms
+            </ActionButton>
+            <ActionButton variant="tertiary" href="#">
+              Privacy
+            </ActionButton>
           </div>
           <div className="space-y-6">
-            <Link href="#">Link Button</Link>
-            <Link href="#">Link Button</Link>
-            <Link href="#">Link Button</Link>
+            <ActionButton variant="tertiary" href="#">
+              Link Button
+            </ActionButton>
+            <ActionButton variant="tertiary" href="#">
+              Link Button
+            </ActionButton>
+            <ActionButton variant="tertiary" href="#">
+              Link Button
+            </ActionButton>
           </div>
           <div className="space-y-6">
-            <Link href="#">Help</Link>
-            <Link href="#">Link Button</Link>
+            <ActionButton variant="tertiary" href="#">
+              Help
+            </ActionButton>
+            <ActionButton variant="tertiary" href="#">
+              Link Button
+            </ActionButton>
           </div>
         </div>
       </div>
