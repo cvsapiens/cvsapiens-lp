@@ -156,7 +156,7 @@ const problemCards = [
 
 function ProblemSection() {
   return (
-    <section id="problem" className="border-t-2 border-[var(--slate-grey)] bg-[var(--page-background)] py-16 lg:py-[86px]">
+    <section id="problem" className="border-t-2 border-[var(--slate-grey)] bg-[var(--surface)] py-16 lg:py-[86px]">
       <div className="section-wrap px-6">
         <div className="mx-auto max-w-[1146px] lg:hidden">
           <h2 className="max-w-[604px] text-[42px] leading-[1.05] sm:text-[60px]">Most resumes never reach a human</h2>
@@ -265,32 +265,32 @@ function ProblemSection() {
 const howSteps = [
   {
     number: "1",
-    title: "Create or import your resume",
-    description: "Choose a template and fill your experience, or paste your existing content.",
+    title: "Create or\nimport resume",
+    description: "Start from scratch with a template, or paste your existing resume content.",
     previewSurface: "bg-[var(--ink-200)]",
     previewAccent: "bg-[var(--ink-100)]",
     previewFrame: "bg-[var(--paper)]",
   },
   {
     number: "2",
-    title: "Upload the job description",
-    description: "We analyze the role and extract key requirements and skills.",
+    title: "Upload job\ndescription",
+    description: "We analyze the role and identify the skills, keywords, and requirements that matter.",
     previewSurface: "bg-[var(--ink-100)]",
     previewAccent: "bg-[var(--paper)]",
     previewFrame: "bg-[var(--canvas)]",
   },
   {
     number: "3",
-    title: "Generate application kit",
-    description: "With only one click we generate a resume, cover letter and a preparation kit for your application.",
+    title: "Optimize with\nAI suggestions",
+    description: "Get tailored improvements for bullet points, keywords, and overall alignment with the role.",
     previewSurface: "bg-[var(--paper)]",
     previewAccent: "bg-[var(--ink-100)]",
     previewFrame: "bg-[var(--ink-200)]",
   },
   {
     number: "4",
-    title: "Export and\napply",
-    description: "Download clean and ATS-optimized PDFs.",
+    title: "Export and\nstart applying",
+    description: "Download a clean, ATS-friendly PDF ready to send with confidence.",
     previewSurface: "bg-[var(--ink-200)]",
     previewAccent: "bg-[var(--canvas)]",
     previewFrame: "bg-[var(--ink-100)]",
@@ -302,7 +302,7 @@ function HowItWorksSection() {
   const currentStep = howSteps[activeStep];
 
   return (
-    <section id="how-it-works" className="border-b-2 border-[var(--slate-grey)] py-16 lg:py-[53px]">
+    <section id="how-it-works" className="border-b-2 border-[var(--slate-grey)] bg-[var(--surface)] py-16 lg:py-[53px]">
       <div className="section-wrap px-6">
         <div className="mx-auto max-w-[1244px]">
           <picture>
@@ -333,7 +333,7 @@ function HowItWorksSection() {
                 onMouseEnter={() => setActiveStep(index)}
                 onFocus={() => setActiveStep(index)}
                 className={cn(
-                  "grid min-h-[272px] grid-rows-[38px_80px_1fr] rounded-[20px] border-2 border-[var(--border)] px-6 py-5 text-left transition-colors duration-200",
+                  "grid min-h-[272px] grid-rows-[38px_minmax(96px,auto)_1fr] rounded-[20px] border-2 border-[var(--border)] px-6 py-5 text-left transition-colors duration-200",
                   isActive ? "bg-[var(--white)]" : "bg-[var(--page-background)] hover:bg-[var(--white)]",
                 )}
                 aria-pressed={isActive}
@@ -341,7 +341,17 @@ function HowItWorksSection() {
                 <span className="block self-start font-[var(--font-zilla-slab)] text-[32px] font-semibold leading-[1.2] tracking-[0.5px]">
                   {step.number}
                 </span>
-                <span className="mt-2 block max-w-[180px] self-start whitespace-pre-line font-[var(--font-zilla-slab)] text-[24px] font-medium leading-[1.45] tracking-[0.5px]">
+                <span
+                  className="mt-2 block max-w-[180px] self-start whitespace-pre-line"
+                  style={{
+                    color: "#1E1E1E",
+                    fontFamily: "var(--font-zilla-slab)",
+                    fontSize: "24px",
+                    fontWeight: 500,
+                    lineHeight: "34.8px",
+                    letterSpacing: "0.5px",
+                  }}
+                >
                   {step.title}
                 </span>
                 <span className="mt-1 block max-w-[188px] self-start text-[18px] leading-[1.4] text-[var(--text-secondary)]">
@@ -449,44 +459,55 @@ const plans: Plan[] = [
 function PricingSection() {
   return (
     <section id="prices" className="section-wrap px-6 py-20">
-      <div className="mx-auto max-w-[1171px]">
+      <div className="mx-auto max-w-[1280px]">
         <h2 className="text-center text-[42px] leading-[1.05] sm:text-[60px]">Simple pricing</h2>
         <p className="mt-4 text-center text-[18px] leading-[1.4] text-[var(--text-secondary)]">
           Choose the plan that works best for your job search
         </p>
-        <div className="mt-12 grid gap-8 lg:grid-cols-3 lg:items-stretch">
+        <div className="mx-auto mt-12 grid max-w-[1149px] gap-8 lg:grid-cols-[356px_356px_374px] lg:items-start lg:gap-[18px]">
           {plans.map((plan) => (
             <article
               key={plan.name}
               className={cn(
-                "relative flex h-full flex-col rounded-[30px] p-7",
+                "relative flex h-full flex-col rounded-[30px] px-8 pb-7 pt-8",
                 plan.variant === "featured"
-                  ? "border-[3px] border-[var(--slate-grey)] bg-[var(--surface)] shadow-[0_12px_28px_rgba(30,30,30,0.16)]"
-                  : "border border-[var(--coral-orange)] bg-[var(--coral-orange-wash)]",
+                  ? "mt-[14px] min-h-[634px] border-[3px] border-[var(--slate-grey)] bg-[var(--surface)] shadow-[0_20px_25px_rgba(0,0,0,0.1),0_8px_10px_rgba(0,0,0,0.1)]"
+                  : "mt-[28px] min-h-[620px] border-2 border-[var(--coral-orange)] bg-[var(--coral-orange-wash)]",
               )}
             >
               {plan.variant === "trial" && (
-                <div className="limited-offer-rotator absolute -left-10 -top-12 hidden w-[112px] lg:block">
+                <div className="limited-offer-rotator absolute -left-[54px] -top-[162px] hidden w-[191px] lg:block">
                   <img src={ASSETS.limitedOfferBadge} alt="Limited offer badge" width={191} height={191} />
                 </div>
               )}
               {plan.variant === "featured" && (
-                <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--coral-orange)] px-5 py-1 text-[14px] font-semibold leading-none text-[var(--white)]">
+                <span className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--coral-orange)] px-[23px] py-[5px] text-[14px] font-semibold leading-none text-[var(--white)]">
                   POPULAR
                 </span>
               )}
-              <div className="min-h-[132px]">
-                <h3 className="text-[32px] font-semibold leading-[1.05]">{plan.name}</h3>
+              <div className="min-h-[145px]">
+                <h3 className="text-[32px] font-semibold leading-[1]">{plan.name}</h3>
                 <div className="mt-4 flex items-end gap-3">
                   <span className="text-[48px] font-semibold leading-none">{plan.price}</span>
                   <span className="mb-1 text-[18px] leading-[1.4] text-[var(--text-disabled)]">{plan.cadence}</span>
                 </div>
-                {plan.eyebrow && <p className="mt-2 text-[18px] leading-[1.4] text-[var(--text-disabled)]">{plan.eyebrow}</p>}
-                <p className="mt-2 text-[18px] leading-[1.4] text-[var(--text-primary)]">{plan.subtitle}</p>
+                <div className="mt-2 min-h-[56px]">
+                  {plan.eyebrow ? (
+                    <>
+                      <p className="text-[18px] leading-[1.4] text-[var(--text-disabled)]">{plan.eyebrow}</p>
+                      <p className="mt-[2px] text-[18px] leading-[1.4] text-[var(--text-primary)]">{plan.subtitle}</p>
+                    </>
+                  ) : (
+                    <>
+                      <div className="h-[25px]" aria-hidden />
+                      <p className="text-[18px] leading-[1.4] text-[var(--text-primary)]">{plan.subtitle}</p>
+                    </>
+                  )}
+                </div>
               </div>
               <ActionButton
                 variant={plan.variant === "trial" ? "secondary" : "primary"}
-                className="mt-8 w-full px-6"
+                className="mt-6 w-full px-6"
               >
                 {plan.cta}
               </ActionButton>
@@ -508,8 +529,8 @@ function PricingSection() {
             </article>
           ))}
         </div>
-        <p className="mt-8 text-center text-[18px] leading-[1.4] text-[var(--text-disabled)]">
-          All plans include secure data storage and regular updates
+        <p className="mt-[80px] text-center text-[18px] leading-[1.4] text-[var(--text-disabled)]">
+          All plans include secure data storage and regular updates.
         </p>
       </div>
     </section>
@@ -594,7 +615,9 @@ function PointersSection() {
             <article className="flex gap-5 px-4 md:px-[55px]">
               <img src={row[0].icon} alt="" aria-hidden width={56} height={56} className="mt-1 h-[56px] w-[56px] shrink-0" />
               <div>
-                <h3 className="max-w-[276px] text-[32px] font-light leading-[1.2] tracking-[0.5px]">{row[0].title}</h3>
+                <h3 className="max-w-[276px] text-[32px] font-medium leading-[1.2] tracking-[0.5px] text-[var(--text-primary)]">
+                  {row[0].title}
+                </h3>
                 <p className="mt-4 max-w-[340px] text-[18px] leading-[1.4]">{row[0].body}</p>
               </div>
             </article>
@@ -602,7 +625,9 @@ function PointersSection() {
             <article className="flex gap-5 px-4 md:px-[55px]">
               <img src={row[1].icon} alt="" aria-hidden width={56} height={56} className="mt-1 h-[56px] w-[56px] shrink-0" />
               <div>
-                <h3 className="max-w-[276px] text-[32px] font-light leading-[1.2] tracking-[0.5px]">{row[1].title}</h3>
+                <h3 className="max-w-[276px] text-[32px] font-medium leading-[1.2] tracking-[0.5px] text-[var(--text-primary)]">
+                  {row[1].title}
+                </h3>
                 <p className="mt-4 max-w-[342px] text-[18px] leading-[1.4]">{row[1].body}</p>
               </div>
             </article>
