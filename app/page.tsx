@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, ReactNode, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 const ASSETS = {
   logoBlack: "/illustration-icons-lp-svg/logo-horizontal-black.svg",
@@ -57,6 +57,52 @@ function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
+function useHorizontalRail() {
+  const railRef = useRef<HTMLDivElement>(null);
+  const [scrollState, setScrollState] = useState({ canScrollLeft: false, canScrollRight: false });
+
+  useEffect(() => {
+    const rail = railRef.current;
+
+    if (!rail) {
+      return;
+    }
+
+    const updateScrollState = () => {
+      const maxScrollLeft = rail.scrollWidth - rail.clientWidth;
+      setScrollState({
+        canScrollLeft: rail.scrollLeft > 8,
+        canScrollRight: maxScrollLeft - rail.scrollLeft > 8,
+      });
+    };
+
+    updateScrollState();
+    rail.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+
+    return () => {
+      rail.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, []);
+
+  const scrollRail = (direction: "left" | "right") => {
+    const rail = railRef.current;
+
+    if (!rail) {
+      return;
+    }
+
+    const distance = Math.max(rail.clientWidth * 0.86, 220);
+    rail.scrollBy({
+      left: direction === "left" ? -distance : distance,
+      behavior: "smooth",
+    });
+  };
+
+  return { railRef, scrollState, scrollRail };
+}
+
 function ActionButton({ children, variant = "primary", href = "#", className, onClick }: ActionButtonProps) {
   const baseClasses =
     "inline-flex min-h-[52px] items-center justify-center rounded-[43px] px-8 font-normal text-[18px] leading-[1.4] tracking-[0.2px] transition-colors duration-200";
@@ -73,6 +119,39 @@ function ActionButton({ children, variant = "primary", href = "#", className, on
     <Link href={href} onClick={onClick} className={cn(baseClasses, styles[variant], className)}>
       {children}
     </Link>
+  );
+}
+
+function ScrollArrowButton({
+  direction,
+  onClick,
+  className,
+}: {
+  direction: "left" | "right";
+  onClick: () => void;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={direction === "left" ? "Scroll cards to the left" : "Scroll cards to the right"}
+      className={cn(
+        "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--ink-200)] bg-[var(--white)] text-[var(--slate-grey)] shadow-[0_4px_4px_rgba(0,0,0,0.1)] transition-transform duration-200 hover:scale-[1.03] hover:bg-[var(--page-background)]",
+        className,
+      )}
+    >
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 22 22"
+        fill="none"
+        aria-hidden="true"
+        className={direction === "left" ? "rotate-180" : undefined}
+      >
+        <path d="M8 5L14 11L8 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </button>
   );
 }
 
@@ -182,8 +261,8 @@ function HeroSection() {
       <div className="mx-auto grid w-full max-w-[360px] grid-cols-3 items-center justify-items-center gap-3 sm:max-w-[520px] sm:gap-4 lg:max-w-[515px] lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-20 lg:gap-y-0">
         <img src={ASSETS.heroShapeOne} alt="" aria-hidden className="h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:h-[188px] lg:w-[182px]" />
         <img src={ASSETS.heroSapienEdit} alt="" aria-hidden className="h-[110px] w-[122px] sm:h-[148px] sm:w-[162px] lg:h-[195px] lg:w-[214px]" />
-        <img src={ASSETS.heroSapienHappy} alt="" aria-hidden className="h-[110px] w-[148px] sm:h-[150px] sm:w-[202px] lg:h-[189px] lg:w-[257px]" />
         <img src={ASSETS.heroShapeTwo} alt="" aria-hidden className="h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:h-[188px] lg:w-[182px]" />
+        <img src={ASSETS.heroSapienHappy} alt="" aria-hidden className="h-[110px] w-[148px] sm:h-[150px] sm:w-[202px] lg:h-[189px] lg:w-[257px]" />
         <div className="shape-three-rotator h-[94px] w-[94px] sm:h-[128px] sm:w-[128px] lg:h-[184px] lg:w-[184px]">
           <img src={ASSETS.heroShapeThree} alt="" aria-hidden className="h-full w-full" />
         </div>
@@ -211,6 +290,8 @@ const problemCards = [
 ] as const;
 
 function ProblemSection() {
+  const { railRef, scrollState, scrollRail } = useHorizontalRail();
+
   return (
     <section id="problem" className="border-t-2 border-[var(--slate-grey)] bg-[var(--surface)] py-16 lg:py-[86px]">
       <div className="section-wrap px-6">
@@ -220,10 +301,27 @@ function ProblemSection() {
           </h2>
         </div>
         <div className="mx-auto mt-10 max-w-[1146px] xl:hidden">
-          <div className="mobile-scroll-row snap-x snap-mandatory pb-4">
-            {problemCards.map((card, index) => (
-              <Fragment key={card.title}>
-                <article className="flex min-h-[306px] w-[286px] shrink-0 snap-start flex-col rounded-[24px] bg-[var(--neutral-100)] px-6 py-6 sm:w-[320px] sm:px-8">
+          <div className="relative">
+            {scrollState.canScrollLeft && (
+              <ScrollArrowButton
+                direction="left"
+                onClick={() => scrollRail("left")}
+                className="absolute left-0 top-1/2 z-10 -translate-x-1/3 -translate-y-1/2"
+              />
+            )}
+            {scrollState.canScrollRight && (
+              <ScrollArrowButton
+                direction="right"
+                onClick={() => scrollRail("right")}
+                className="absolute right-0 top-1/2 z-10 translate-x-1/3 -translate-y-1/2"
+              />
+            )}
+            <div ref={railRef} className="mobile-scroll-row mobile-scroll-row-tight snap-x snap-mandatory pb-4">
+              {problemCards.map((card) => (
+                <article
+                  key={card.title}
+                  className="flex min-h-[306px] w-[286px] shrink-0 snap-start flex-col rounded-[24px] bg-[var(--neutral-100)] px-6 py-6 sm:w-[320px] sm:px-8"
+                >
                   <img
                     src={ASSETS.problemSecondSection}
                     alt=""
@@ -241,18 +339,8 @@ function ProblemSection() {
                     </p>
                   </div>
                 </article>
-                {index < problemCards.length - 1 && (
-                  <img
-                    src={ASSETS.secondSectionArrow}
-                    alt=""
-                    aria-hidden
-                    width={146}
-                    height={17}
-                    className="mt-[138px] hidden h-[17px] w-[92px] shrink-0 self-start sm:block"
-                  />
-                )}
-              </Fragment>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
         <div className="relative mx-auto hidden h-[523px] max-w-[1146px] xl:block">
@@ -364,6 +452,7 @@ const howSteps = [
 function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState(0);
   const currentStep = howSteps[activeStep];
+  const { railRef, scrollState, scrollRail } = useHorizontalRail();
 
   return (
     <section id="how-it-works" className="border-b-2 border-[var(--slate-grey)] bg-[var(--surface)] py-16 lg:py-[53px]">
@@ -386,45 +475,61 @@ function HowItWorksSection() {
         </h2>
 
         <div className="mx-auto mt-10 max-w-[1146px] xl:grid xl:grid-cols-4 xl:gap-[27px]">
-          <div className="mobile-scroll-row snap-x snap-mandatory pb-4 xl:contents">
-            {howSteps.map((step, index) => {
-              const isActive = index === activeStep;
+          <div className="relative xl:contents">
+            {scrollState.canScrollLeft && (
+              <ScrollArrowButton
+                direction="left"
+                onClick={() => scrollRail("left")}
+                className="absolute left-0 top-[136px] z-10 -translate-x-1/3 -translate-y-1/2 xl:hidden"
+              />
+            )}
+            {scrollState.canScrollRight && (
+              <ScrollArrowButton
+                direction="right"
+                onClick={() => scrollRail("right")}
+                className="absolute right-0 top-[136px] z-10 translate-x-1/3 -translate-y-1/2 xl:hidden"
+              />
+            )}
+            <div ref={railRef} className="mobile-scroll-row snap-x snap-mandatory pb-4 xl:contents">
+              {howSteps.map((step, index) => {
+                const isActive = index === activeStep;
 
-              return (
-                <button
-                  key={step.number}
-                  type="button"
-                  onClick={() => setActiveStep(index)}
-                  onMouseEnter={() => setActiveStep(index)}
-                  onFocus={() => setActiveStep(index)}
-                  className={cn(
-                    "grid min-h-[272px] w-[280px] shrink-0 snap-start grid-rows-[38px_minmax(96px,auto)_1fr] rounded-[20px] border-2 border-[var(--border)] px-6 py-5 text-left transition-colors duration-200 sm:w-[308px] xl:w-auto xl:shrink-0 xl:snap-none",
-                    isActive ? "bg-[var(--white)]" : "bg-[var(--page-background)] hover:bg-[var(--white)]",
-                  )}
-                  aria-pressed={isActive}
-                >
-                  <span className="block self-start font-[var(--font-zilla-slab)] text-[32px] font-semibold leading-[1.2] tracking-[0.5px]">
-                    {step.number}
-                  </span>
-                  <span
-                    className="mt-2 block max-w-[180px] self-start whitespace-pre-line"
-                    style={{
-                      color: "#1E1E1E",
-                      fontFamily: "var(--font-zilla-slab)",
-                      fontSize: "24px",
-                      fontWeight: 500,
-                      lineHeight: "34.8px",
-                      letterSpacing: "0.5px",
-                    }}
+                return (
+                  <button
+                    key={step.number}
+                    type="button"
+                    onClick={() => setActiveStep(index)}
+                    onMouseEnter={() => setActiveStep(index)}
+                    onFocus={() => setActiveStep(index)}
+                    className={cn(
+                      "grid min-h-[272px] w-[280px] shrink-0 snap-start grid-rows-[38px_minmax(96px,auto)_1fr] rounded-[20px] border-2 border-[var(--border)] px-6 py-5 text-left transition-colors duration-200 sm:w-[308px] xl:w-auto xl:shrink-0 xl:snap-none",
+                      isActive ? "bg-[var(--white)]" : "bg-[var(--page-background)] hover:bg-[var(--white)]",
+                    )}
+                    aria-pressed={isActive}
                   >
-                    {step.title}
-                  </span>
-                  <span className="mt-1 block max-w-[188px] self-start text-[18px] leading-[1.4] text-[var(--text-secondary)]">
-                    {step.description}
-                  </span>
-                </button>
-              );
-            })}
+                    <span className="block self-start font-[var(--font-zilla-slab)] text-[32px] font-semibold leading-[1.2] tracking-[0.5px]">
+                      {step.number}
+                    </span>
+                    <span
+                      className="mt-2 block max-w-[180px] self-start whitespace-pre-line"
+                      style={{
+                        color: "#1E1E1E",
+                        fontFamily: "var(--font-zilla-slab)",
+                        fontSize: "24px",
+                        fontWeight: 500,
+                        lineHeight: "34.8px",
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      {step.title}
+                    </span>
+                    <span className="mt-1 block max-w-[188px] self-start text-[18px] leading-[1.4] text-[var(--text-secondary)]">
+                      {step.description}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -641,7 +746,7 @@ function PointersSection() {
             aria-hidden
             width={53}
             height={55}
-            className="h-[34px] w-auto shrink-0 sm:h-[48px]"
+            className="pointer-decor h-[34px] w-auto shrink-0 sm:h-[48px]"
           />
         </span>
         <span className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 sm:mt-4">
@@ -651,7 +756,7 @@ function PointersSection() {
             aria-hidden
             width={48}
             height={50}
-            className="h-[32px] w-auto shrink-0 sm:h-[44px]"
+            className="pointer-decor h-[32px] w-auto shrink-0 sm:h-[44px]"
           />
           <span className="font-medium italic">match job descriptions</span>
           <span className="font-light">and</span>
@@ -661,7 +766,7 @@ function PointersSection() {
             aria-hidden
             width={47}
             height={48}
-            className="h-[32px] w-auto shrink-0 sm:h-[42px]"
+            className="pointer-decor h-[32px] w-auto shrink-0 sm:h-[42px]"
           />
           <span className="font-medium italic">pass ATS screening</span>
         </span>
@@ -684,7 +789,7 @@ function PointersSection() {
                 <p className="mt-4 max-w-[340px] text-[18px] leading-[1.4]">{row[0].body}</p>
               </div>
             </article>
-            <div className="hidden h-[148px] w-[2px] self-center bg-[var(--slate-grey)] md:block" />
+            <div className="pointer-divider hidden h-[148px] w-[2px] self-center bg-[var(--slate-grey)] md:block" />
             <article className="flex gap-5 px-4 md:px-[55px]">
               <img src={row[1].icon} alt="" aria-hidden width={56} height={56} className="mt-1 h-[56px] w-[56px] shrink-0" />
               <div>

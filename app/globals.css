@@ -106,6 +106,10 @@ img {
   display: none;
 }
 
+.mobile-scroll-row-tight {
+  gap: 0.75rem;
+}
+
 .reveal {
   animation: reveal-up 400ms ease-out both;
 }
@@ -208,5 +212,15 @@ img {
 @media (min-width: 1280px) {
   .mobile-scroll-row {
     display: contents;
+  }
+}
+
+@media (max-width: 462px) {
+  .pointer-decor {
+    display: none;
+  }
+
+  .pointer-divider {
+    display: none !important;
   }
 }
