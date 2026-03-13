@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const ASSETS = {
   logoBlack: "/illustration-icons-lp-svg/logo-horizontal-black.svg",
@@ -12,11 +12,8 @@ const ASSETS = {
   heroSapienEdit: "/illustration-icons-lp-svg/sapien-edit.svg",
   heroSapienHappy: "/illustration-icons-lp-svg/sapien-happy.svg",
   heroSapienThinking: "/illustration-icons-lp-svg/sapien-thinking.svg",
-  problemVague: "/illustration-icons-lp-svg/illustration-bullet-points.svg",
-  problemRole: "/illustration-icons-lp-svg/illustration-not-tailored.svg",
-  problemGeneric: "/illustration-icons-lp-svg/illustration-generic-content.svg",
-  secondSectionBg: "/illustration-icons-lp-svg/second-section-bg.svg",
-  secondSectionVector: "/illustration-icons-lp-svg/vector-second-section.svg",
+  problemSecondSection: "/illustration-icons-lp-svg/illustration-second-section.svg",
+  secondSectionArrow: "/illustration-icons-lp-svg/arrow-second-section.svg",
   howIconResume: "/illustration-icons-lp-svg/illustration-how-it-works-one.svg",
   howIconJob: "/illustration-icons-lp-svg/illustration-how-it-works-two.svg",
   howIconOptimize: "/illustration-icons-lp-svg/illustration-how-it-works-three.svg",
@@ -151,53 +148,120 @@ const problemCards = [
     title: "Vague bullet points",
     description:
       "Your resume is scanned by an Applicant Tracking System. If it lacks the right keywords, it gets rejected automatically.",
-    image: ASSETS.problemVague,
   },
   {
     title: "Not tailored to the role",
     description:
       "Sending the same resume everywhere lowers your chances. Recruiters expect clear alignment with the job description.",
-    image: ASSETS.problemRole,
   },
   {
     title: "Generic Content",
     description: "“Worked on backend systems” is not enough. Impact, metrics and relevant skills matter.",
-    image: ASSETS.problemGeneric,
   },
 ] as const;
 
 function ProblemSection() {
   return (
-    <section id="problem" className="relative overflow-hidden bg-[var(--white)] py-16 lg:py-20">
-      <img
-        src={ASSETS.secondSectionBg}
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 left-1/2 w-full min-w-[1440px] -translate-x-1/2"
-      />
-      <div className="section-wrap relative z-10 px-6">
-        <div className="relative mx-auto max-w-[1126px]">
+    <section id="problem" className="border-t-2 border-[var(--slate-grey)] bg-[var(--page-background)] py-16 lg:py-[86px]">
+      <div className="section-wrap px-6">
+        <div className="mx-auto max-w-[1146px] lg:hidden">
           <h2 className="max-w-[604px] text-[42px] leading-[1.05] sm:text-[60px]">Most resumes never reach a human</h2>
+        </div>
+        <div className="mx-auto mt-14 flex max-w-[1146px] flex-col items-center gap-6 lg:hidden">
+          {problemCards.map((card, index) => (
+            <Fragment key={card.title}>
+              <article className="min-h-[321px] w-full max-w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
+                <img
+                  src={ASSETS.problemSecondSection}
+                  alt=""
+                  aria-hidden
+                  width={33}
+                  height={34}
+                  className="h-[34px] w-[33px]"
+                />
+                <div className="mt-6 space-y-4">
+                  <h3 className="max-w-[206px] text-[32px] font-medium leading-[1.2] tracking-[0.5px]">{card.title}</h3>
+                  <p className="max-w-[226px] text-[18px] leading-[1.4] text-[var(--text-secondary)]">{card.description}</p>
+                </div>
+              </article>
+              {index < problemCards.length - 1 && (
+                <img
+                  src={ASSETS.secondSectionArrow}
+                  alt=""
+                  aria-hidden
+                  width={146}
+                  height={17}
+                  className="h-[17px] w-[146px] shrink-0 rotate-90"
+                />
+              )}
+            </Fragment>
+          ))}
+        </div>
+        <div className="relative mx-auto hidden h-[523px] max-w-[1146px] lg:block">
+          <h2 className="absolute left-0 top-0 max-w-[604px] text-[60px] leading-[1.05]">Most resumes never reach a human</h2>
+
+          <article className="absolute left-0 top-[202px] h-[321px] w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
+            <img
+              src={ASSETS.problemSecondSection}
+              alt=""
+              aria-hidden
+              width={31}
+              height={32}
+              className="h-[32px] w-[31px]"
+            />
+            <div className="mt-6 space-y-4">
+              <h3 className="max-w-[206px] text-[32px] font-medium leading-[1.2] tracking-[0.5px]">{problemCards[0].title}</h3>
+              <p className="max-w-[226px] text-[18px] leading-[1.4] text-[var(--text-secondary)]">{problemCards[0].description}</p>
+            </div>
+          </article>
+
           <img
-            src={ASSETS.secondSectionVector}
+            src={ASSETS.secondSectionArrow}
             alt=""
             aria-hidden
-            className="absolute right-0 top-4 hidden w-[494px] max-w-[45%] lg:block"
+            width={146}
+            height={17}
+            className="absolute left-[290px] top-[202px] h-[17px] w-[146px]"
           />
-        </div>
-        <div className="mx-auto mt-14 grid max-w-[1126px] justify-center gap-8 lg:grid-cols-3 lg:gap-[118px]">
-          {problemCards.map((card) => (
-            <article
-              key={card.title}
-              className="flex min-h-[478px] flex-col gap-6 rounded-[20px] bg-[var(--surface-alt)] px-8 py-6"
-            >
-              <img src={card.image} alt={card.title} width={156} height={189} className="h-[189px] w-[156px]" />
-              <div className="space-y-4">
-                <h3 className="max-w-[226px] text-[32px] font-medium leading-[1.2] tracking-[0.5px]">{card.title}</h3>
-                <p className="max-w-[226px] text-[18px] leading-[1.4] text-[var(--text-secondary)]">{card.description}</p>
-              </div>
-            </article>
-          ))}
+
+          <article className="absolute left-[428px] top-[202px] h-[321px] w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
+            <img
+              src={ASSETS.problemSecondSection}
+              alt=""
+              aria-hidden
+              width={31}
+              height={32}
+              className="h-[32px] w-[31px]"
+            />
+            <div className="mt-6 space-y-4">
+              <h3 className="max-w-[206px] text-[32px] font-medium leading-[1.2] tracking-[0.5px]">{problemCards[1].title}</h3>
+              <p className="max-w-[226px] text-[18px] leading-[1.4] text-[var(--text-secondary)]">{problemCards[1].description}</p>
+            </div>
+          </article>
+
+          <img
+            src={ASSETS.secondSectionArrow}
+            alt=""
+            aria-hidden
+            width={146}
+            height={17}
+            className="absolute left-[718px] top-[202px] h-[17px] w-[146px]"
+          />
+
+          <article className="absolute left-[856px] top-[202px] h-[321px] w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
+            <img
+              src={ASSETS.problemSecondSection}
+              alt=""
+              aria-hidden
+              width={31}
+              height={32}
+              className="h-[32px] w-[31px]"
+            />
+            <div className="mt-6 space-y-4">
+              <h3 className="max-w-[206px] text-[32px] font-medium leading-[1.2] tracking-[0.5px]">{problemCards[2].title}</h3>
+              <p className="max-w-[226px] text-[18px] leading-[1.4] text-[var(--text-secondary)]">{problemCards[2].description}</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
