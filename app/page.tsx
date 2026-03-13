@@ -26,6 +26,7 @@ const ASSETS = {
   impactTitleOne: "/illustration-icons-lp-svg/illustration-impact-one.svg",
   impactTitleTwo: "/illustration-icons-lp-svg/illustration-impact-two.svg",
   impactTitleThree: "/illustration-icons-lp-svg/illustration-impact-three.svg",
+  sapienVideo: "/illustration-icons-lp-svg/sapien-video.mp4",
   ctaIllustration: "/illustration-icons-lp-svg/sapien-svg.svg",
   footerShapes: "/illustration-icons-lp-svg/illustration-footer.svg",
 } as const;
@@ -640,26 +641,31 @@ function PointersSection() {
 
 function CtaSection() {
   return (
-    <section className="section-wrap grid gap-12 px-6 py-20 lg:grid-cols-[minmax(0,709px)_minmax(0,480px)] lg:items-center lg:justify-between">
-      <div className="overflow-hidden rounded-[44px] border-4 border-[var(--coral-orange)] bg-[var(--surface)] p-6 md:p-10 lg:rounded-[72px]">
-        <img
-          src={ASSETS.ctaIllustration}
-          alt="CV Sapiens mascot working on a laptop"
-          width={846}
-          height={565}
-          className="mx-auto h-auto w-full max-w-[620px]"
-        />
+    <section className="section-wrap grid gap-12 px-6 py-20 lg:grid-cols-[658px_506px] lg:items-start lg:justify-between lg:gap-[80px] lg:pt-[56px]">
+      <div className="h-[320px] overflow-hidden rounded-[44px] border-4 border-[var(--coral-orange)] bg-[var(--surface)] sm:h-[420px] lg:h-[525px] lg:rounded-[90px]">
+        <video
+          src={ASSETS.sapienVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          controls
+          preload="metadata"
+          className="h-full w-full object-cover"
+        >
+          Your browser does not support the video tag.
+        </video>
       </div>
-      <div className="max-w-[506px]">
-        <h2 className="text-[42px] leading-[1.05] sm:text-[60px]">Stop sending the same resume everywhere.</h2>
-        <div className="mt-8 max-w-[480px] space-y-6 text-[18px] leading-[1.4] text-[var(--text-primary)]">
+      <div className="max-w-[506px] pt-1">
+        <h2 className="max-w-[506px] text-[42px] leading-[1.05] sm:text-[60px]">Stop sending the same resume everywhere.</h2>
+        <div className="mt-8 max-w-[480px] space-y-6 text-[18px] leading-[1.4] text-[var(--text-primary)] lg:mt-[32px]">
           <p>You&apos;ve already done the hard work: building skills, shipping projects, gaining experience.</p>
           <p>
             With <strong>cv sapiens</strong> you can refine your experience, align your resume with job descriptions, and present
             your skills in a way that both ATS systems and recruiters understand.
           </p>
         </div>
-        <ActionButton className="mt-10">Start Free Trial</ActionButton>
+        <ActionButton className="mt-12 lg:mt-[48px]">Start Free Trial</ActionButton>
       </div>
     </section>
   );
