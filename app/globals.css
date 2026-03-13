@@ -92,6 +92,20 @@ img {
   margin-inline: auto;
 }
 
+.mobile-scroll-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-inline: 0.125rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobile-scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
 .reveal {
   animation: reveal-up 400ms ease-out both;
 }
@@ -188,5 +202,11 @@ img {
 
   .how-it-works-card-content {
     animation: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .mobile-scroll-row {
+    display: contents;
   }
 }

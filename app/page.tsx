@@ -39,6 +39,7 @@ type ActionButtonProps = {
   variant?: ButtonVariant;
   href?: string;
   className?: string;
+  onClick?: () => void;
 };
 
 type Plan = {
@@ -56,7 +57,7 @@ function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
-function ActionButton({ children, variant = "primary", href = "#", className }: ActionButtonProps) {
+function ActionButton({ children, variant = "primary", href = "#", className, onClick }: ActionButtonProps) {
   const baseClasses =
     "inline-flex min-h-[52px] items-center justify-center rounded-[43px] px-8 font-normal text-[18px] leading-[1.4] tracking-[0.2px] transition-colors duration-200";
   const styles: Record<ButtonVariant, string> = {
@@ -69,7 +70,7 @@ function ActionButton({ children, variant = "primary", href = "#", className }: 
   };
 
   return (
-    <Link href={href} className={cn(baseClasses, styles[variant], className)}>
+    <Link href={href} onClick={onClick} className={cn(baseClasses, styles[variant], className)}>
       {children}
     </Link>
   );
@@ -82,6 +83,7 @@ function Logo({ dark = true }: { dark?: boolean }) {
 }
 
 function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navItems = [
     { label: "Problem", href: "#problem" },
     { label: "How it works", href: "#how-it-works" },
@@ -90,21 +92,71 @@ function Navbar() {
 
   return (
     <header className="section-wrap reveal pt-4">
-      <div className="flex items-center justify-between rounded-2xl border-2 border-[var(--slate-grey)] bg-[var(--page-background)] px-6 py-4">
-        <Logo />
-        <nav className="hidden items-center gap-8 lg:flex">
-          {navItems.map((item) => (
-            <ActionButton key={item.label} variant="tertiary" className="text-[18px]" href={item.href}>
-              {item.label}
+      <div className="relative rounded-2xl border-2 border-[var(--slate-grey)] bg-[var(--page-background)] px-4 py-4 sm:px-6">
+        <div className="flex items-center justify-between gap-4">
+          <Logo />
+          <button
+            type="button"
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-[var(--slate-grey)] bg-[var(--surface)] text-[var(--slate-grey)] transition-colors duration-200 hover:bg-[var(--coral-orange-soft)] lg:hidden"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav"
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            onClick={() => setIsMenuOpen((open) => !open)}
+          >
+            <span className="sr-only">{isMenuOpen ? "Close menu" : "Open menu"}</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              {isMenuOpen ? (
+                <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              ) : (
+                <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              )}
+            </svg>
+          </button>
+          <nav className="hidden items-center gap-8 lg:flex">
+            {navItems.map((item) => (
+              <ActionButton key={item.label} variant="tertiary" className="text-[18px]" href={item.href}>
+                {item.label}
+              </ActionButton>
+            ))}
+            <ActionButton variant="secondary" className="min-h-[38px] px-6 py-2 text-[18px]">
+              Log in
             </ActionButton>
-          ))}
-          <ActionButton variant="secondary" className="min-h-[38px] px-6 py-2 text-[18px]">
-            Log in
-          </ActionButton>
-          <ActionButton variant="primary" className="min-h-[38px] px-6 py-2 text-[18px]">
-            Sign up
-          </ActionButton>
-        </nav>
+            <ActionButton variant="primary" className="min-h-[38px] px-6 py-2 text-[18px]">
+              Sign up
+            </ActionButton>
+          </nav>
+        </div>
+        <div
+          id="mobile-nav"
+          className={cn(
+            "overflow-hidden transition-[max-height,opacity,margin] duration-300 lg:hidden",
+            isMenuOpen ? "mt-4 max-h-[420px] opacity-100" : "max-h-0 opacity-0",
+          )}
+        >
+          <nav className="rounded-[24px] border-2 border-[var(--slate-grey)] bg-[var(--surface)] p-4">
+            <div className="flex flex-col gap-2">
+              {navItems.map((item) => (
+                <ActionButton
+                  key={item.label}
+                  variant="tertiary"
+                  href={item.href}
+                  className="min-h-[48px] justify-start rounded-[18px] px-4 text-[18px] hover:bg-[var(--coral-orange-wash)]"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </ActionButton>
+              ))}
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <ActionButton variant="secondary" className="min-h-[48px] px-6 py-2 text-[18px]" onClick={() => setIsMenuOpen(false)}>
+                Log in
+              </ActionButton>
+              <ActionButton variant="primary" className="min-h-[48px] px-6 py-2 text-[18px]" onClick={() => setIsMenuOpen(false)}>
+                Sign up
+              </ActionButton>
+            </div>
+          </nav>
+        </div>
       </div>
     </header>
   );
@@ -112,28 +164,30 @@ function Navbar() {
 
 function HeroSection() {
   return (
-    <section className="section-wrap reveal grid gap-8 px-6 py-12 lg:grid-cols-[1fr_515px] lg:items-center">
-      <div>
-        <p className="mb-6 text-[18px] italic leading-[1.4]">
+    <section className="section-wrap reveal grid gap-8 px-6 py-8 sm:py-10 lg:grid-cols-[1fr_515px] lg:items-center lg:py-12">
+      <div className="max-w-[580px]">
+        <p className="mb-5 text-[16px] italic leading-[1.4] sm:text-[18px]">
           Built for professionals in tech - useful for anyone applying globally.
         </p>
-        <h1 className="max-w-[576px] text-[42px] leading-[1.05] sm:text-[60px]">Build a resume that passes ATS and gets interviews</h1>
-        <p className="mt-8 max-w-[410px] text-[18px] leading-[1.4]">
+        <h1 className="max-w-[576px] text-[38px] leading-[0.98] sm:text-[52px] lg:text-[60px]">
+          Build a resume that passes ATS and gets interviews
+        </h1>
+        <p className="mt-6 max-w-[440px] text-[17px] leading-[1.4] sm:text-[18px]">
           Create, optimize and tailor your resume with AI.
           <br />
           Match job descriptions, improve keywords, and export a clean, professional PDF.
         </p>
-        <ActionButton className="mt-8 w-fit">Start Free Trial</ActionButton>
+        <ActionButton className="mt-7 w-full sm:mt-8 sm:w-fit">Start Free Trial</ActionButton>
       </div>
-      <div className="grid h-[678px] w-full max-w-[515px] grid-cols-2 grid-rows-3 items-center justify-items-center gap-x-20">
-        <img src={ASSETS.heroShapeOne} alt="" aria-hidden className="h-[188px] w-[182px]" />
-        <img src={ASSETS.heroSapienEdit} alt="" aria-hidden className="h-[195px] w-[214px]" />
-        <img src={ASSETS.heroSapienHappy} alt="" aria-hidden className="h-[189px] w-[257px]" />
-        <img src={ASSETS.heroShapeTwo} alt="" aria-hidden className="h-[188px] w-[182px]" />
-        <div className="shape-three-rotator h-[184px] w-[184px]">
-          <img src={ASSETS.heroShapeThree} alt="" aria-hidden className="h-[184px] w-[184px]" />
+      <div className="mx-auto grid w-full max-w-[360px] grid-cols-3 items-center justify-items-center gap-3 sm:max-w-[520px] sm:gap-4 lg:max-w-[515px] lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-20 lg:gap-y-0">
+        <img src={ASSETS.heroShapeOne} alt="" aria-hidden className="h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:h-[188px] lg:w-[182px]" />
+        <img src={ASSETS.heroSapienEdit} alt="" aria-hidden className="h-[110px] w-[122px] sm:h-[148px] sm:w-[162px] lg:h-[195px] lg:w-[214px]" />
+        <img src={ASSETS.heroSapienHappy} alt="" aria-hidden className="h-[110px] w-[148px] sm:h-[150px] sm:w-[202px] lg:h-[189px] lg:w-[257px]" />
+        <img src={ASSETS.heroShapeTwo} alt="" aria-hidden className="h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:h-[188px] lg:w-[182px]" />
+        <div className="shape-three-rotator h-[94px] w-[94px] sm:h-[128px] sm:w-[128px] lg:h-[184px] lg:w-[184px]">
+          <img src={ASSETS.heroShapeThree} alt="" aria-hidden className="h-full w-full" />
         </div>
-        <img src={ASSETS.heroSapienThinking} alt="" aria-hidden className="h-[188px] w-[205px]" />
+        <img src={ASSETS.heroSapienThinking} alt="" aria-hidden className="h-[104px] w-[114px] sm:h-[144px] sm:w-[156px] lg:h-[188px] lg:w-[205px]" />
       </div>
     </section>
   );
@@ -160,40 +214,48 @@ function ProblemSection() {
   return (
     <section id="problem" className="border-t-2 border-[var(--slate-grey)] bg-[var(--surface)] py-16 lg:py-[86px]">
       <div className="section-wrap px-6">
-        <div className="mx-auto max-w-[1146px] lg:hidden">
-          <h2 className="max-w-[604px] text-[42px] leading-[1.05] sm:text-[60px]">Most resumes never reach a human</h2>
+        <div className="mx-auto max-w-[1146px] xl:hidden">
+          <h2 className="max-w-[604px] text-[38px] leading-[1.02] sm:text-[52px] lg:text-[56px]">
+            Most resumes never reach a human
+          </h2>
         </div>
-        <div className="mx-auto mt-14 flex max-w-[1146px] flex-col items-center gap-6 lg:hidden">
-          {problemCards.map((card, index) => (
-            <Fragment key={card.title}>
-              <article className="min-h-[321px] w-full max-w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
-                <img
-                  src={ASSETS.problemSecondSection}
-                  alt=""
-                  aria-hidden
-                  width={33}
-                  height={34}
-                  className="h-[34px] w-[33px]"
-                />
-                <div className="mt-6 space-y-4">
-                  <h3 className="max-w-[206px] text-[32px] font-medium leading-[1.2] tracking-[0.5px]">{card.title}</h3>
-                  <p className="max-w-[226px] text-[18px] leading-[1.4] text-[var(--text-secondary)]">{card.description}</p>
-                </div>
-              </article>
-              {index < problemCards.length - 1 && (
-                <img
-                  src={ASSETS.secondSectionArrow}
-                  alt=""
-                  aria-hidden
-                  width={146}
-                  height={17}
-                  className="h-[17px] w-[146px] shrink-0 rotate-90"
-                />
-              )}
-            </Fragment>
-          ))}
+        <div className="mx-auto mt-10 max-w-[1146px] xl:hidden">
+          <div className="mobile-scroll-row snap-x snap-mandatory pb-4">
+            {problemCards.map((card, index) => (
+              <Fragment key={card.title}>
+                <article className="flex min-h-[306px] w-[286px] shrink-0 snap-start flex-col rounded-[24px] bg-[var(--neutral-100)] px-6 py-6 sm:w-[320px] sm:px-8">
+                  <img
+                    src={ASSETS.problemSecondSection}
+                    alt=""
+                    aria-hidden
+                    width={33}
+                    height={34}
+                    className="h-[34px] w-[33px]"
+                  />
+                  <div className="mt-6 space-y-4">
+                    <h3 className="max-w-[220px] text-[30px] font-medium leading-[1.1] tracking-[0.4px] sm:text-[32px]">
+                      {card.title}
+                    </h3>
+                    <p className="max-w-[240px] text-[17px] leading-[1.4] text-[var(--text-secondary)] sm:text-[18px]">
+                      {card.description}
+                    </p>
+                  </div>
+                </article>
+                {index < problemCards.length - 1 && (
+                  <img
+                    src={ASSETS.secondSectionArrow}
+                    alt=""
+                    aria-hidden
+                    width={146}
+                    height={17}
+                    className="mt-[138px] hidden h-[17px] w-[92px] shrink-0 self-start sm:block"
+                  />
+                )}
+              </Fragment>
+            ))}
+          </div>
         </div>
-        <div className="relative mx-auto hidden h-[523px] max-w-[1146px] lg:block">
+        <div className="relative mx-auto hidden h-[523px] max-w-[1146px] xl:block">
           <h2 className="absolute left-0 top-0 max-w-[604px] text-[60px] leading-[1.05]">Most resumes never reach a human</h2>
 
           <article className="absolute left-0 top-[202px] h-[321px] w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
@@ -319,54 +381,56 @@ function HowItWorksSection() {
           </picture>
         </div>
 
-        <h2 className="mx-auto mt-20 max-w-[697px] text-center text-[42px] leading-[1.05] sm:text-[60px] lg:mt-[102px]">
+        <h2 className="mx-auto mt-14 max-w-[697px] text-center text-[38px] leading-[1.02] sm:mt-20 sm:text-[52px] lg:mt-[102px] lg:text-[60px]">
           From draft to optimized resume in minutes
         </h2>
 
-        <div className="mx-auto mt-10 grid max-w-[1146px] gap-6 md:grid-cols-2 xl:grid-cols-4 xl:gap-[27px]">
-          {howSteps.map((step, index) => {
-            const isActive = index === activeStep;
+        <div className="mx-auto mt-10 max-w-[1146px] xl:grid xl:grid-cols-4 xl:gap-[27px]">
+          <div className="mobile-scroll-row snap-x snap-mandatory pb-4 xl:contents">
+            {howSteps.map((step, index) => {
+              const isActive = index === activeStep;
 
-            return (
-              <button
-                key={step.number}
-                type="button"
-                onClick={() => setActiveStep(index)}
-                onMouseEnter={() => setActiveStep(index)}
-                onFocus={() => setActiveStep(index)}
-                className={cn(
-                  "grid min-h-[272px] grid-rows-[38px_minmax(96px,auto)_1fr] rounded-[20px] border-2 border-[var(--border)] px-6 py-5 text-left transition-colors duration-200",
-                  isActive ? "bg-[var(--white)]" : "bg-[var(--page-background)] hover:bg-[var(--white)]",
-                )}
-                aria-pressed={isActive}
-              >
-                <span className="block self-start font-[var(--font-zilla-slab)] text-[32px] font-semibold leading-[1.2] tracking-[0.5px]">
-                  {step.number}
-                </span>
-                <span
-                  className="mt-2 block max-w-[180px] self-start whitespace-pre-line"
-                  style={{
-                    color: "#1E1E1E",
-                    fontFamily: "var(--font-zilla-slab)",
-                    fontSize: "24px",
-                    fontWeight: 500,
-                    lineHeight: "34.8px",
-                    letterSpacing: "0.5px",
-                  }}
+              return (
+                <button
+                  key={step.number}
+                  type="button"
+                  onClick={() => setActiveStep(index)}
+                  onMouseEnter={() => setActiveStep(index)}
+                  onFocus={() => setActiveStep(index)}
+                  className={cn(
+                    "grid min-h-[272px] w-[280px] shrink-0 snap-start grid-rows-[38px_minmax(96px,auto)_1fr] rounded-[20px] border-2 border-[var(--border)] px-6 py-5 text-left transition-colors duration-200 sm:w-[308px] xl:w-auto xl:shrink-0 xl:snap-none",
+                    isActive ? "bg-[var(--white)]" : "bg-[var(--page-background)] hover:bg-[var(--white)]",
+                  )}
+                  aria-pressed={isActive}
                 >
-                  {step.title}
-                </span>
-                <span className="mt-1 block max-w-[188px] self-start text-[18px] leading-[1.4] text-[var(--text-secondary)]">
-                  {step.description}
-                </span>
-              </button>
-            );
-          })}
+                  <span className="block self-start font-[var(--font-zilla-slab)] text-[32px] font-semibold leading-[1.2] tracking-[0.5px]">
+                    {step.number}
+                  </span>
+                  <span
+                    className="mt-2 block max-w-[180px] self-start whitespace-pre-line"
+                    style={{
+                      color: "#1E1E1E",
+                      fontFamily: "var(--font-zilla-slab)",
+                      fontSize: "24px",
+                      fontWeight: 500,
+                      lineHeight: "34.8px",
+                      letterSpacing: "0.5px",
+                    }}
+                  >
+                    {step.title}
+                  </span>
+                  <span className="mt-1 block max-w-[188px] self-start text-[18px] leading-[1.4] text-[var(--text-secondary)]">
+                    {step.description}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div
           className={cn(
-            "mx-auto mt-6 max-w-[1146px] rounded-[30px] px-6 py-6 transition-colors duration-300 md:px-10 md:py-10 lg:min-h-[692px]",
+            "mx-auto mt-2 max-w-[1146px] rounded-[30px] px-5 py-5 transition-colors duration-300 md:mt-6 md:px-10 md:py-10 lg:min-h-[692px]",
             currentStep.previewSurface,
           )}
         >
@@ -462,7 +526,7 @@ function PricingSection() {
   return (
     <section id="prices" className="section-wrap px-6 py-20">
       <div className="mx-auto max-w-[1280px]">
-        <h2 className="text-center text-[42px] leading-[1.05] sm:text-[60px]">Simple pricing</h2>
+        <h2 className="text-center text-[38px] leading-[1.02] sm:text-[52px] lg:text-[60px]">Simple pricing</h2>
         <p className="mt-4 text-center text-[18px] leading-[1.4] text-[var(--text-secondary)]">
           Choose the plan that works best for your job search
         </p>
@@ -471,23 +535,23 @@ function PricingSection() {
             <article
               key={plan.name}
               className={cn(
-                "relative flex h-full flex-col rounded-[30px] px-8 pb-7 pt-8",
+                "relative flex h-full flex-col rounded-[30px] px-6 pb-7 pt-7 sm:px-8 sm:pt-8",
                 plan.variant === "featured"
                   ? "mt-[14px] min-h-[634px] border-[3px] border-[var(--slate-grey)] bg-[var(--surface)] shadow-[0_20px_25px_rgba(0,0,0,0.1),0_8px_10px_rgba(0,0,0,0.1)]"
                   : "mt-[28px] min-h-[620px] border-2 border-[var(--coral-orange)] bg-[var(--coral-orange-wash)]",
               )}
             >
               {plan.variant === "trial" && (
-                <div className="limited-offer-rotator absolute -left-[54px] -top-[162px] hidden w-[191px] lg:block">
-                  <img src={ASSETS.limitedOfferBadge} alt="Limited offer badge" width={191} height={191} />
+                <div className="limited-offer-rotator absolute right-4 top-4 w-[88px] sm:w-[108px] lg:-left-[30px] lg:-top-[84px] lg:right-auto lg:w-[132px] xl:-left-[40px] xl:-top-[104px] xl:w-[152px]">
+                  <img src={ASSETS.limitedOfferBadge} alt="Limited offer badge" width={152} height={152} />
                 </div>
               )}
               {plan.variant === "featured" && (
-                <span className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--coral-orange)] px-[23px] py-[5px] text-[14px] font-semibold leading-none text-[var(--white)]">
+                <span className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--coral-orange)] px-4 py-[5px] text-[12px] font-semibold leading-none tracking-[0.12em] text-[var(--white)] sm:px-[23px] sm:text-[14px]">
                   POPULAR
                 </span>
               )}
-              <div className="min-h-[145px]">
+              <div className={cn("min-h-[145px]", plan.variant === "trial" && "pr-20 sm:pr-28 lg:pr-0")}>
                 <h3 className="text-[32px] font-semibold leading-[1]">{plan.name}</h3>
                 <div className="mt-4 flex items-end gap-3">
                   <span className="text-[48px] font-semibold leading-none">{plan.price}</span>
@@ -567,45 +631,42 @@ const pointerFeatureRows = [pointerFeatures.slice(0, 2), pointerFeatures.slice(2
 function PointersSection() {
   return (
     <section className="section-wrap px-6 py-20">
-      <h2 className="mx-auto flex max-w-[1040px] flex-col items-center text-center text-[42px] leading-[1.26] tracking-[-0.6px] sm:text-[60px]">
-        <span className="flex flex-wrap items-center justify-center gap-x-[16px] gap-y-2">
-          <span className="font-light">cv sapiens helps you</span>
+      <h2 className="mx-auto max-w-[980px] text-center text-[36px] leading-[1.04] tracking-[-0.5px] sm:text-[50px] lg:text-[60px]">
+        <span className="block font-light">cv sapiens helps you</span>
+        <span className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 sm:mt-4">
+          <span className="font-medium italic">build stronger resumes</span>
           <img
             src={ASSETS.impactTitleThree}
             alt=""
             aria-hidden
             width={53}
             height={55}
-            className="h-[38px] w-auto shrink-0 self-center sm:h-[55px]"
+            className="h-[34px] w-auto shrink-0 sm:h-[48px]"
           />
-          <span className="font-medium italic">build stronger</span>
         </span>
-        <span className="mt-3 flex flex-wrap items-center justify-center gap-x-[16px] gap-y-2 sm:mt-2">
-          <span className="font-medium italic">resumes,</span>
+        <span className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 sm:mt-4">
           <img
             src={ASSETS.impactTitleOne}
             alt=""
             aria-hidden
             width={48}
             height={50}
-            className="h-[34px] w-auto shrink-0 self-center sm:h-[50px]"
+            className="h-[32px] w-auto shrink-0 sm:h-[44px]"
           />
-          <span className="font-medium italic">match job descriptions,</span>
+          <span className="font-medium italic">match job descriptions</span>
           <span className="font-light">and</span>
-        </span>
-        <span className="mt-3 flex flex-wrap items-center justify-center gap-x-[16px] gap-y-2 sm:mt-2">
           <img
             src={ASSETS.impactTitleTwo}
             alt=""
             aria-hidden
             width={47}
             height={48}
-            className="h-[34px] w-auto shrink-0 self-center sm:h-[48px]"
+            className="h-[32px] w-auto shrink-0 sm:h-[42px]"
           />
           <span className="font-medium italic">pass ATS screening</span>
         </span>
       </h2>
-      <div className="mt-8 border-y-2 border-[var(--slate-grey)]">
+      <div className="mt-10 border-y-2 border-[var(--slate-grey)]">
         {pointerFeatureRows.map((row, rowIndex) => (
           <div
             key={row.map((feature) => feature.title).join("-")}
