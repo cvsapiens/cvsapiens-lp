@@ -6,6 +6,7 @@ import { Fragment, ReactNode, useState } from "react";
 const ASSETS = {
   logoBlack: "/illustration-icons-lp-svg/logo-horizontal-black.svg",
   logoDefault: "/illustration-icons-lp-svg/logo-horizontal-default.svg",
+  logoAvatarBlack: "/illustration-icons-lp-svg/logo-avatar-black.svg",
   heroShapeOne: "/illustration-icons-lp-svg/iilustration-shape-one.svg",
   heroShapeTwo: "/illustration-icons-lp-svg/iilustration-shape-two.svg",
   heroShapeThree: "/illustration-icons-lp-svg/iilustration-shape-three.svg",
@@ -649,7 +650,6 @@ function CtaSection() {
           muted
           loop
           playsInline
-          controls
           preload="metadata"
           className="h-full w-full object-cover"
         >
@@ -672,51 +672,43 @@ function CtaSection() {
 }
 
 function FooterSection() {
+  const footerColumns = [
+    [
+      { label: "Problem", href: "#problem" },
+      { label: "How it works", href: "#how-it-works" },
+      { label: "Terms", href: "#" },
+    ],
+    [
+      { label: "Log in", href: "#" },
+      { label: "Sign up", href: "#" },
+      { label: "Help", href: "#faq" },
+    ],
+  ] as const;
+
   return (
-    <footer id="faq" className="relative mt-8 overflow-hidden border-t border-[var(--slate-grey)] pt-16">
-      <div className="section-wrap relative z-10 grid gap-12 px-6 lg:grid-cols-[1fr_auto] lg:items-start lg:gap-[120px]">
-        <div className="flex items-center gap-10">
-          <Logo dark={false} />
-          <div className="hidden h-[154px] w-px bg-[var(--slate-grey)] lg:block" />
+    <footer id="faq" className="mt-8 border-t-2 border-[var(--slate-grey)] py-16 lg:py-[66px]">
+      <div className="section-wrap flex flex-col gap-12 px-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex justify-center lg:w-[237px] lg:justify-start">
+          <img
+            src={ASSETS.logoAvatarBlack}
+            alt="cv sapiens"
+            width={237}
+            height={128}
+            className="h-auto w-[180px] lg:w-[237px]"
+          />
         </div>
-        <div className="grid gap-10 text-[18px] leading-[1.43] md:grid-cols-3 md:gap-[79px]">
-          <div className="space-y-6">
-            <ActionButton variant="tertiary" href="#">
-              Link Button
-            </ActionButton>
-            <ActionButton variant="tertiary" href="#">
-              Link Button
-            </ActionButton>
-            <ActionButton variant="tertiary" href="#">
-              Terms
-            </ActionButton>
-            <ActionButton variant="tertiary" href="#">
-              Privacy
-            </ActionButton>
-          </div>
-          <div className="space-y-6">
-            <ActionButton variant="tertiary" href="#">
-              Link Button
-            </ActionButton>
-            <ActionButton variant="tertiary" href="#">
-              Link Button
-            </ActionButton>
-            <ActionButton variant="tertiary" href="#">
-              Link Button
-            </ActionButton>
-          </div>
-          <div className="space-y-6">
-            <ActionButton variant="tertiary" href="#">
-              Help
-            </ActionButton>
-            <ActionButton variant="tertiary" href="#">
-              Link Button
-            </ActionButton>
-          </div>
+        <div className="mx-auto hidden h-[150px] w-[2px] shrink-0 bg-[var(--slate-grey)] lg:block" />
+        <div className="grid gap-10 md:grid-cols-2 md:gap-[79px] lg:ml-auto lg:justify-items-start">
+          {footerColumns.map((column, index) => (
+            <div key={index} className="flex flex-col items-center gap-8 md:items-start">
+              {column.map((item) => (
+                <ActionButton key={item.label} variant="tertiary" href={item.href} className="text-[18px] leading-[1.43]">
+                  {item.label}
+                </ActionButton>
+              ))}
+            </div>
+          ))}
         </div>
-      </div>
-      <div className="relative mt-16 min-h-[520px]">
-        <img src={ASSETS.footerShapes} alt="" aria-hidden className="absolute inset-x-1/2 bottom-0 min-w-[1200px] max-w-none -translate-x-1/2" />
       </div>
     </footer>
   );
