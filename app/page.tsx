@@ -219,7 +219,7 @@ function Navbar() {
                   key={item.label}
                   variant="tertiary"
                   href={item.href}
-                  className="min-h-[48px] justify-start rounded-[18px] px-4 text-[18px] hover:bg-[var(--coral-orange-wash)]"
+                  className="min-h-[48px] justify-start rounded-[18px] px-4 text-[18px]"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
@@ -258,15 +258,40 @@ function HeroSection() {
         </p>
         <ActionButton className="mt-7 w-full sm:mt-8 sm:w-fit">Start Free Trial</ActionButton>
       </div>
-      <div className="mx-auto grid w-full max-w-[360px] grid-cols-3 items-center justify-items-center gap-3 sm:max-w-[520px] sm:gap-4 lg:max-w-[515px] lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-20 lg:gap-y-0">
-        <img src={ASSETS.heroShapeOne} alt="" aria-hidden className="h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:h-[188px] lg:w-[182px]" />
-        <img src={ASSETS.heroSapienEdit} alt="" aria-hidden className="h-[110px] w-[122px] sm:h-[148px] sm:w-[162px] lg:h-[195px] lg:w-[214px]" />
-        <img src={ASSETS.heroShapeTwo} alt="" aria-hidden className="h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:h-[188px] lg:w-[182px]" />
-        <img src={ASSETS.heroSapienHappy} alt="" aria-hidden className="h-[110px] w-[148px] sm:h-[150px] sm:w-[202px] lg:h-[189px] lg:w-[257px]" />
-        <div className="shape-three-rotator h-[94px] w-[94px] sm:h-[128px] sm:w-[128px] lg:h-[184px] lg:w-[184px]">
+      <div className="mx-auto grid w-full max-w-[360px] grid-cols-3 items-center justify-items-center gap-3 sm:max-w-[520px] sm:gap-4 lg:max-w-[560px] lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-24 lg:gap-y-4">
+        <img
+          src={ASSETS.heroShapeOne}
+          alt=""
+          aria-hidden
+          className="order-1 h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:order-1 lg:h-[188px] lg:w-[182px]"
+        />
+        <img
+          src={ASSETS.heroSapienEdit}
+          alt=""
+          aria-hidden
+          className="order-2 h-[110px] w-[122px] sm:h-[148px] sm:w-[162px] lg:order-2 lg:h-[195px] lg:w-[214px]"
+        />
+        <img
+          src={ASSETS.heroShapeTwo}
+          alt=""
+          aria-hidden
+          className="order-3 h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:order-4 lg:h-[188px] lg:w-[182px]"
+        />
+        <img
+          src={ASSETS.heroSapienHappy}
+          alt=""
+          aria-hidden
+          className="order-4 h-[110px] w-[148px] sm:h-[150px] sm:w-[202px] lg:order-3 lg:h-[189px] lg:w-[257px]"
+        />
+        <div className="shape-three-rotator order-5 h-[94px] w-[94px] sm:h-[128px] sm:w-[128px] lg:order-5 lg:h-[184px] lg:w-[184px]">
           <img src={ASSETS.heroShapeThree} alt="" aria-hidden className="h-full w-full" />
         </div>
-        <img src={ASSETS.heroSapienThinking} alt="" aria-hidden className="h-[104px] w-[114px] sm:h-[144px] sm:w-[156px] lg:h-[188px] lg:w-[205px]" />
+        <img
+          src={ASSETS.heroSapienThinking}
+          alt=""
+          aria-hidden
+          className="order-6 h-[104px] w-[114px] sm:h-[144px] sm:w-[156px] lg:order-6 lg:h-[188px] lg:w-[205px]"
+        />
       </div>
     </section>
   );
@@ -629,7 +654,7 @@ const plans: Plan[] = [
 
 function PricingSection() {
   return (
-    <section id="prices" className="section-wrap px-6 py-20">
+    <section id="prices" className="section-wrap px-6 pb-8 pt-20 sm:pb-12 lg:pb-16">
       <div className="mx-auto max-w-[1280px]">
         <h2 className="text-center text-[38px] leading-[1.02] sm:text-[52px] lg:text-[60px]">Simple pricing</h2>
         <p className="mt-4 text-center text-[18px] leading-[1.4] text-[var(--text-secondary)]">
@@ -700,7 +725,7 @@ function PricingSection() {
             </article>
           ))}
         </div>
-        <p className="mt-[80px] text-center text-[18px] leading-[1.4] text-[var(--text-disabled)]">
+        <p className="mt-12 text-center text-[18px] leading-[1.4] text-[var(--text-disabled)] sm:mt-16">
           All plans include secure data storage and regular updates.
         </p>
       </div>
@@ -735,7 +760,7 @@ const pointerFeatureRows = [pointerFeatures.slice(0, 2), pointerFeatures.slice(2
 
 function PointersSection() {
   return (
-    <section className="section-wrap px-6 py-20">
+    <section className="section-wrap px-6 pb-20 pt-10 sm:pt-14 lg:pt-16">
       <h2 className="mx-auto max-w-[980px] text-center text-[36px] leading-[1.04] tracking-[-0.5px] sm:text-[50px] lg:text-[60px]">
         <span className="block font-light">cv sapiens helps you</span>
         <span className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 sm:mt-4">
@@ -864,9 +889,9 @@ function FooterSection() {
           />
         </div>
         <div className="mx-auto hidden h-[150px] w-[2px] shrink-0 bg-[var(--slate-grey)] lg:block" />
-        <div className="grid gap-10 md:grid-cols-2 md:gap-[79px] lg:ml-auto lg:justify-items-start">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:ml-auto lg:justify-items-start">
           {footerColumns.map((column, index) => (
-            <div key={index} className="flex flex-col items-center gap-8 md:items-start">
+            <div key={index} className="flex flex-col items-center gap-5 md:items-start">
               {column.map((item) => (
                 <ActionButton key={item.label} variant="tertiary" href={item.href} className="text-[18px] leading-[1.43]">
                   {item.label}
