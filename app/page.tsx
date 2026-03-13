@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, ReactNode, useState } from "react";
 
 const ASSETS = {
   logoBlack: "/illustration-icons-lp-svg/logo-horizontal-black.svg",
@@ -14,14 +14,8 @@ const ASSETS = {
   heroSapienThinking: "/illustration-icons-lp-svg/sapien-thinking.svg",
   problemSecondSection: "/illustration-icons-lp-svg/illustration-second-section.svg",
   secondSectionArrow: "/illustration-icons-lp-svg/arrow-second-section.svg",
-  howIconResume: "/illustration-icons-lp-svg/illustration-how-it-works-one.svg",
-  howIconJob: "/illustration-icons-lp-svg/illustration-how-it-works-two.svg",
-  howIconOptimize: "/illustration-icons-lp-svg/illustration-how-it-works-three.svg",
-  howIconExport: "/illustration-icons-lp-svg/illustration-how-it-works-four.svg",
-  howIllustrationOne: "/illustration-icons-lp-svg/illustration-sapien-how-it-works-one.svg",
-  howIllustrationTwo: "/illustration-icons-lp-svg/illustration-sapien-how-it-works-two.svg",
-  howIllustrationThree: "/illustration-icons-lp-svg/illustration-sapien-how-it-works-three.svg",
-  howIllustrationFour: "/illustration-icons-lp-svg/illustration-sapien-how-it-works-four.svg",
+  sapiensBannerAvif: "/illustration-icons-lp-svg/SapiensLP-Banner.avif",
+  sapiensBannerPng: "/illustration-icons-lp-svg/SapiensLP-Banner.png",
   limitedOfferBadge: "/illustration-icons-lp-svg/illustration-limited-offer.svg",
   check: "/illustration-icons-lp-svg/Check.svg",
   cross: "/illustration-icons-lp-svg/X.svg",
@@ -268,179 +262,125 @@ function ProblemSection() {
   );
 }
 
-const HOW_IT_WORKS_STEP_DURATION_MS = 7500;
-
 const howSteps = [
   {
-    text: "Create or import your resume",
-    icon: ASSETS.howIconResume,
-    panelColor: "bg-[var(--coral-orange)]",
-    progressColor: "bg-[var(--coral-orange)]",
-    illustration: ASSETS.howIllustrationOne,
-    description: "Choose a template and fill your experience, or paste your existing content",
-    descriptionWidth: "w-[307px]",
+    number: "1",
+    title: "Create or import your resume",
+    description: "Choose a template and fill your experience, or paste your existing content.",
+    previewSurface: "bg-[var(--ink-200)]",
+    previewAccent: "bg-[var(--ink-100)]",
+    previewFrame: "bg-[var(--paper)]",
   },
   {
-    text: "Upload the job description",
-    icon: ASSETS.howIconJob,
-    panelColor: "bg-[var(--chalk-pink)]",
-    progressColor: "bg-[var(--chalk-pink)]",
-    illustration: ASSETS.howIllustrationTwo,
-    description: "We analyze the role and extract key requirements and skills",
-    descriptionWidth: "w-[307px]",
+    number: "2",
+    title: "Upload the job description",
+    description: "We analyze the role and extract key requirements and skills.",
+    previewSurface: "bg-[var(--ink-100)]",
+    previewAccent: "bg-[var(--paper)]",
+    previewFrame: "bg-[var(--canvas)]",
   },
   {
-    text: "Optimize with AI",
-    icon: ASSETS.howIconOptimize,
-    panelColor: "bg-[var(--windjammer-blue)]",
-    progressColor: "bg-[var(--windjammer-blue)]",
-    illustration: ASSETS.howIllustrationThree,
-    description: "Keyword gap analysis, tailored suggestions per job and much more improvements",
-    descriptionWidth: "w-[307px]",
+    number: "3",
+    title: "Generate application kit",
+    description: "With only one click we generate a resume, cover letter and a preparation kit for your application.",
+    previewSurface: "bg-[var(--paper)]",
+    previewAccent: "bg-[var(--ink-100)]",
+    previewFrame: "bg-[var(--ink-200)]",
   },
   {
-    text: "Export and apply",
-    icon: ASSETS.howIconExport,
-    panelColor: "bg-[var(--daffodil)]",
-    progressColor: "bg-[var(--daffodil)]",
-    illustration: ASSETS.howIllustrationFour,
-    description: "Download a clean, ATS-friendly PDF",
-    descriptionWidth: "w-[232px]",
+    number: "4",
+    title: "Export and\napply",
+    description: "Download clean and ATS-optimized PDFs.",
+    previewSurface: "bg-[var(--ink-200)]",
+    previewAccent: "bg-[var(--canvas)]",
+    previewFrame: "bg-[var(--ink-100)]",
   },
 ] as const;
 
 function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState(0);
-  const [cycleKey, setCycleKey] = useState(0);
-  const gridRef = useRef<HTMLDivElement | null>(null);
-  const progressOverlayRef = useRef<HTMLDivElement | null>(null);
-  const stepLabelRefs = useRef<Array<HTMLSpanElement | null>>([]);
-  const panelTextRef = useRef<HTMLParagraphElement | null>(null);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setActiveStep((currentStep) => (currentStep + 1) % howSteps.length);
-      setCycleKey((currentKey) => currentKey + 1);
-    }, HOW_IT_WORKS_STEP_DURATION_MS);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [activeStep, cycleKey]);
-
-  function restartStep(stepIndex: number) {
-    setActiveStep(stepIndex);
-    setCycleKey((currentKey) => currentKey + 1);
-  }
-
   const currentStep = howSteps[activeStep];
 
-  useLayoutEffect(() => {
-    const grid = gridRef.current;
-    const overlay = progressOverlayRef.current;
-    const activeLabel = stepLabelRefs.current[activeStep];
-    const panelText = panelTextRef.current;
-
-    if (!grid || !overlay || !activeLabel || !panelText) {
-      return;
-    }
-
-    const updateProgressLine = () => {
-      const gridRect = grid.getBoundingClientRect();
-      const labelRect = activeLabel.getBoundingClientRect();
-      const panelTextRect = panelText.getBoundingClientRect();
-
-      const left = labelRect.left - gridRect.left;
-      const top = labelRect.bottom - gridRect.top + 8;
-      const width = Math.max(0, panelTextRect.left - gridRect.left - left);
-
-      overlay.style.setProperty("--how-it-works-line-left", `${left}px`);
-      overlay.style.setProperty("--how-it-works-line-top", `${top}px`);
-      overlay.style.setProperty("--how-it-works-line-width", `${width}px`);
-    };
-
-    updateProgressLine();
-
-    const resizeObserver = new ResizeObserver(updateProgressLine);
-    resizeObserver.observe(grid);
-    resizeObserver.observe(activeLabel);
-    resizeObserver.observe(panelText);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [activeStep, currentStep.descriptionWidth]);
-
   return (
-    <section id="how-it-works" className="section-wrap px-6 py-20 lg:py-24">
-      <h2 className="mx-auto max-w-[697px] text-center text-[42px] leading-[1.05] sm:text-[60px]">From draft to optimized resume in minutes</h2>
-      <div ref={gridRef} className="relative mt-16 grid items-center gap-12 lg:grid-cols-[1fr_701px]">
-        <div ref={progressOverlayRef} className="pointer-events-none absolute inset-0 hidden lg:block">
-          <span
-            className="absolute h-[2px] rounded-full bg-[var(--slate-grey)]"
-            style={{
-              left: "var(--how-it-works-line-left)",
-              top: "var(--how-it-works-line-top)",
-              width: "var(--how-it-works-line-width)",
-            }}
-          />
-          <span
-            className="absolute h-[4px] overflow-hidden rounded-full"
-            style={{
-              left: "var(--how-it-works-line-left)",
-              top: "calc(var(--how-it-works-line-top) - 1px)",
-              width: "var(--how-it-works-line-width)",
-            }}
-          >
-            <span
-              key={`${activeStep}-${cycleKey}`}
-              className={cn("how-it-works-progress block h-full", currentStep.progressColor)}
-              style={{ animationDuration: `${HOW_IT_WORKS_STEP_DURATION_MS}ms` }}
+    <section id="how-it-works" className="border-b-2 border-[var(--slate-grey)] py-16 lg:py-[53px]">
+      <div className="section-wrap px-6">
+        <div className="mx-auto max-w-[1244px]">
+          <picture>
+            <source srcSet={ASSETS.sapiensBannerAvif} type="image/avif" />
+            <img
+              src={ASSETS.sapiensBannerPng}
+              alt="CV Sapiens characters banner"
+              width={1244}
+              height={174}
+              className="mx-auto h-auto w-full"
             />
-          </span>
+          </picture>
         </div>
-        <ul className="relative z-10 space-y-16">
-          {howSteps.map((step, index) => (
-            <li key={step.text}>
+
+        <h2 className="mx-auto mt-20 max-w-[697px] text-center text-[42px] leading-[1.05] sm:text-[60px] lg:mt-[102px]">
+          From draft to optimized resume in minutes
+        </h2>
+
+        <div className="mx-auto mt-10 grid max-w-[1146px] gap-6 md:grid-cols-2 xl:grid-cols-4 xl:gap-[27px]">
+          {howSteps.map((step, index) => {
+            const isActive = index === activeStep;
+
+            return (
               <button
+                key={step.number}
                 type="button"
-                onClick={() => restartStep(index)}
-                className="group flex cursor-pointer items-start gap-[30px] text-left"
-                aria-pressed={index === activeStep}
+                onClick={() => setActiveStep(index)}
+                onMouseEnter={() => setActiveStep(index)}
+                onFocus={() => setActiveStep(index)}
+                className={cn(
+                  "grid min-h-[272px] grid-rows-[38px_80px_1fr] rounded-[20px] border-2 border-[var(--border)] px-6 py-5 text-left transition-colors duration-200",
+                  isActive ? "bg-[var(--white)]" : "bg-[var(--page-background)] hover:bg-[var(--white)]",
+                )}
+                aria-pressed={isActive}
               >
-                <img src={step.icon} alt="" aria-hidden width={31} height={32} className="mt-[2px] h-auto w-[31px] shrink-0" />
-                <span
-                  ref={(element) => {
-                    stepLabelRefs.current[index] = element;
-                  }}
-                  className="block font-[var(--font-zilla-slab)] font-medium text-[24px] leading-[1.45] tracking-[0.5px] transition-colors duration-200 group-hover:text-[var(--ink-700)]"
-                >
-                  {step.text}
+                <span className="block self-start font-[var(--font-zilla-slab)] text-[32px] font-semibold leading-[1.2] tracking-[0.5px]">
+                  {step.number}
+                </span>
+                <span className="mt-2 block max-w-[180px] self-start whitespace-pre-line font-[var(--font-zilla-slab)] text-[24px] font-medium leading-[1.45] tracking-[0.5px]">
+                  {step.title}
+                </span>
+                <span className="mt-1 block max-w-[188px] self-start text-[18px] leading-[1.4] text-[var(--text-secondary)]">
+                  {step.description}
                 </span>
               </button>
-            </li>
-          ))}
-        </ul>
+            );
+          })}
+        </div>
+
         <div
           className={cn(
-            "relative z-10 h-[555px] w-full rounded-[41px] border-2 border-[var(--slate-grey)] transition-colors duration-500 ease-out",
-            currentStep.panelColor,
+            "mx-auto mt-6 max-w-[1146px] rounded-[30px] px-6 py-6 transition-colors duration-300 md:px-10 md:py-10 lg:min-h-[692px]",
+            currentStep.previewSurface,
           )}
         >
-          <div key={`${activeStep}-${cycleKey}`} className="how-it-works-card-content absolute inset-0">
-            <img
-              src={currentStep.illustration}
-              alt="How CV Sapiens works"
-              width={388}
-              height={439}
-              className="absolute -left-[68px] top-[30px] h-[439px] w-[388px]"
-            />
-            <p
-              ref={panelTextRef}
-              className={cn("absolute left-[362px] top-[146px] font-[var(--font-zilla-slab)] text-[38px] leading-[1.2] tracking-[0.5px]", currentStep.descriptionWidth)}
-            >
-              {currentStep.description}
-            </p>
+          <div className="grid gap-6 lg:grid-cols-[1.25fr_0.95fr] lg:gap-10">
+            <div className={cn("rounded-[24px] p-5 transition-colors duration-300 md:p-8", currentStep.previewFrame)}>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className={cn("h-[220px] rounded-[18px] transition-colors duration-300 md:h-[280px]", currentStep.previewAccent)} />
+                <div className="space-y-4">
+                  <div className={cn("h-12 rounded-[14px] transition-colors duration-300", currentStep.previewAccent)} />
+                  <div className={cn("h-28 rounded-[18px] transition-colors duration-300", currentStep.previewAccent)} />
+                  <div className={cn("h-24 rounded-[18px] transition-colors duration-300", currentStep.previewAccent)} />
+                </div>
+              </div>
+            </div>
+
+            <div className={cn("rounded-[24px] p-6 transition-colors duration-300 md:p-8", currentStep.previewFrame)}>
+              <p className="text-[16px] uppercase tracking-[0.18em] text-[var(--text-secondary)]">Preview placeholder</p>
+              <p className="mt-6 max-w-[294px] font-[var(--font-zilla-slab)] text-[30px] leading-[1.2] tracking-[0.5px] md:text-[38px]">
+                Step {currentStep.number}: {currentStep.title}
+              </p>
+              <p className="mt-4 max-w-[328px] text-[18px] leading-[1.4] text-[var(--text-secondary)]">{currentStep.description}</p>
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className={cn("h-[112px] rounded-[18px] transition-colors duration-300", currentStep.previewAccent)} />
+                <div className={cn("h-[112px] rounded-[18px] transition-colors duration-300", currentStep.previewAccent)} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
