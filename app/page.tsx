@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const ASSETS = {
-  logoBlack: "/illustration-icons-lp-svg/logo-black.svg",
-  logoDefault: "/illustration-icons-lp-svg/logo-default.svg",
+  logoBlack: "/illustration-icons-lp-svg/logo-horizontal-black.svg",
+  logoDefault: "/illustration-icons-lp-svg/logo-horizontal-default.svg",
   heroShapeOne: "/illustration-icons-lp-svg/iilustration-shape-one.svg",
   heroShapeTwo: "/illustration-icons-lp-svg/iilustration-shape-two.svg",
   heroShapeThree: "/illustration-icons-lp-svg/iilustration-shape-three.svg",
@@ -89,14 +89,20 @@ function Logo({ dark = true }: { dark?: boolean }) {
 }
 
 function Navbar() {
+  const navItems = [
+    { label: "Problem", href: "#problem" },
+    { label: "How it works", href: "#how-it-works" },
+    { label: "Prices", href: "#prices" },
+  ] as const;
+
   return (
     <header className="section-wrap reveal pt-4">
       <div className="flex items-center justify-between rounded-2xl border-2 border-[var(--slate-grey)] bg-[var(--page-background)] px-6 py-4">
         <Logo />
         <nav className="hidden items-center gap-8 lg:flex">
-          {["About", "Features", "Pricing", "FAQ"].map((item) => (
-            <ActionButton key={item} variant="tertiary" className="text-[18px]" href={`#${item.toLowerCase()}`}>
-              {item}
+          {navItems.map((item) => (
+            <ActionButton key={item.label} variant="tertiary" className="text-[18px]" href={item.href}>
+              {item.label}
             </ActionButton>
           ))}
           <ActionButton variant="secondary" className="min-h-[38px] px-6 py-2 text-[18px]">
@@ -162,7 +168,7 @@ const problemCards = [
 
 function ProblemSection() {
   return (
-    <section id="about" className="relative overflow-hidden bg-[var(--white)] py-16 lg:py-20">
+    <section id="problem" className="relative overflow-hidden bg-[var(--white)] py-16 lg:py-20">
       <img
         src={ASSETS.secondSectionBg}
         alt=""
@@ -302,7 +308,7 @@ function HowItWorksSection() {
   }, [activeStep, currentStep.descriptionWidth]);
 
   return (
-    <section id="features" className="section-wrap px-6 py-20 lg:py-24">
+    <section id="how-it-works" className="section-wrap px-6 py-20 lg:py-24">
       <h2 className="mx-auto max-w-[697px] text-center text-[42px] leading-[1.05] sm:text-[60px]">From draft to optimized resume in minutes</h2>
       <div ref={gridRef} className="relative mt-16 grid items-center gap-12 lg:grid-cols-[1fr_701px]">
         <div ref={progressOverlayRef} className="pointer-events-none absolute inset-0 hidden lg:block">
@@ -438,7 +444,7 @@ const plans: Plan[] = [
 
 function PricingSection() {
   return (
-    <section id="pricing" className="section-wrap px-6 py-20">
+    <section id="prices" className="section-wrap px-6 py-20">
       <div className="mx-auto max-w-[1171px]">
         <h2 className="text-center text-[42px] leading-[1.05] sm:text-[60px]">Simple pricing</h2>
         <p className="mt-4 text-center text-[18px] leading-[1.4] text-[var(--text-secondary)]">
