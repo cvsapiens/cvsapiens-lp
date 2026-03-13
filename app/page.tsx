@@ -672,7 +672,7 @@ function PricingSection() {
               )}
             >
               {plan.variant === "trial" && (
-                <div className="limited-offer-rotator absolute right-4 top-4 w-[88px] sm:w-[108px] lg:-left-[30px] lg:-top-[84px] lg:right-auto lg:w-[132px] xl:-left-[40px] xl:-top-[104px] xl:w-[152px]">
+                <div className="limited-offer-rotator absolute right-4 top-4 z-10 w-[88px] sm:w-[108px] lg:-left-[48px] lg:-top-[102px] lg:right-auto lg:w-[132px] xl:-left-[56px] xl:-top-[120px] xl:w-[152px]">
                   <img src={ASSETS.limitedOfferBadge} alt="Limited offer badge" width={152} height={152} />
                 </div>
               )}
@@ -761,7 +761,7 @@ const pointerFeatureRows = [pointerFeatures.slice(0, 2), pointerFeatures.slice(2
 function PointersSection() {
   return (
     <section className="section-wrap px-6 pb-20 pt-10 sm:pt-14 lg:pt-16">
-      <h2 className="mx-auto max-w-[980px] text-center text-[36px] leading-[1.04] tracking-[-0.5px] sm:text-[50px] lg:text-[60px]">
+      <h2 className="mx-auto max-w-[980px] text-center text-[36px] leading-[1.04] tracking-[-0.5px] sm:text-[50px] lg:hidden">
         <span className="block font-light">cv sapiens helps you</span>
         <span className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 sm:mt-4">
           <span className="font-medium italic">build stronger resumes</span>
@@ -792,6 +792,44 @@ function PointersSection() {
             width={47}
             height={48}
             className="pointer-decor h-[32px] w-auto shrink-0 sm:h-[42px]"
+          />
+          <span className="font-medium italic">pass ATS screening</span>
+        </span>
+      </h2>
+      <h2 className="mx-auto hidden max-w-[1040px] text-center text-[60px] leading-[1.26] tracking-[-1px] text-[var(--text-primary)] lg:block">
+        <span className="flex items-center justify-center gap-5">
+          <span className="font-light">cv sapiens helps you</span>
+          <img
+            src={ASSETS.impactTitleThree}
+            alt=""
+            aria-hidden
+            width={53}
+            height={55}
+            className="h-[55px] w-auto shrink-0"
+          />
+          <span className="font-medium italic">build stronger</span>
+        </span>
+        <span className="mt-3 flex items-center justify-center gap-4">
+          <span className="font-medium italic">resumes,</span>
+          <img
+            src={ASSETS.impactTitleOne}
+            alt=""
+            aria-hidden
+            width={48}
+            height={50}
+            className="h-[50px] w-auto shrink-0"
+          />
+          <span className="font-medium italic">match job descriptions,</span>
+          <span className="font-light">and</span>
+        </span>
+        <span className="mt-3 flex items-center justify-center gap-4">
+          <img
+            src={ASSETS.impactTitleTwo}
+            alt=""
+            aria-hidden
+            width={47}
+            height={48}
+            className="h-[48px] w-auto shrink-0"
           />
           <span className="font-medium italic">pass ATS screening</span>
         </span>
