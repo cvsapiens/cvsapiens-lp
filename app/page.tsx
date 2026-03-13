@@ -6,7 +6,7 @@ import { Fragment, ReactNode, useState } from "react";
 const ASSETS = {
   logoBlack: "/illustration-icons-lp-svg/logo-horizontal-black.svg",
   logoDefault: "/illustration-icons-lp-svg/logo-horizontal-default.svg",
-  logoAvatarBlack: "/illustration-icons-lp-svg/logo-avatar-black.svg",
+  logoVerticalBlack: "/illustration-icons-lp-svg/logo-vertical-black.svg",
   heroShapeOne: "/illustration-icons-lp-svg/iilustration-shape-one.svg",
   heroShapeTwo: "/illustration-icons-lp-svg/iilustration-shape-two.svg",
   heroShapeThree: "/illustration-icons-lp-svg/iilustration-shape-three.svg",
@@ -27,7 +27,7 @@ const ASSETS = {
   impactTitleOne: "/illustration-icons-lp-svg/illustration-impact-one.svg",
   impactTitleTwo: "/illustration-icons-lp-svg/illustration-impact-two.svg",
   impactTitleThree: "/illustration-icons-lp-svg/illustration-impact-three.svg",
-  sapienVideo: "/illustration-icons-lp-svg/sapien-video.mp4",
+  sapienVideo: "/illustration-icons-lp-svg/sapien-video-02.mp4",
   ctaIllustration: "/illustration-icons-lp-svg/sapien-svg.svg",
   footerShapes: "/illustration-icons-lp-svg/illustration-footer.svg",
 } as const;
@@ -690,7 +690,7 @@ function FooterSection() {
       <div className="section-wrap flex flex-col gap-12 px-6 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex justify-center lg:w-[237px] lg:justify-start">
           <img
-            src={ASSETS.logoAvatarBlack}
+            src={ASSETS.logoVerticalBlack}
             alt="cv sapiens"
             width={237}
             height={128}
