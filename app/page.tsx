@@ -173,7 +173,7 @@ function Logo({ dark = true }: { dark?: boolean }) {
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navItems = [
-    { label: "Why it matters", href: "#problem" },
+    { label: "Why it matters", href: "#why-it-matters" },
     { label: "How it works", href: "#how-it-works" },
     { label: "Prices", href: "#prices" },
   ] as const;
@@ -359,7 +359,7 @@ function ProblemSection() {
   const { railRef, scrollState, scrollRail } = useHorizontalRail();
 
   return (
-    <section id="problem" className="border-t-2 border-[var(--slate-grey)] bg-[var(--surface)] py-16 lg:py-[86px]">
+    <section id="why-it-matters" className="border-t-2 border-[var(--slate-grey)] bg-[var(--surface)] py-16 lg:py-[86px]">
       <div className="section-wrap px-6">
         <div className="mx-auto max-w-[1146px] xl:hidden">
           <h2 className="max-w-[604px] text-[38px] leading-[1.02] sm:text-[52px] lg:text-[56px]">
@@ -944,7 +944,7 @@ function CtaSection() {
 
 function FooterSection() {
   const footerLinks = [
-    { label: "Why it matters", href: "#problem" },
+    { label: "Why it matters", href: "#why-it-matters" },
     { label: "How it works", href: "#how-it-works" },
     { label: "Terms", href: "#" },
   ] as const;
