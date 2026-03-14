@@ -172,7 +172,7 @@ function Logo({ dark = true }: { dark?: boolean }) {
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navItems = [
-    { label: "Problem", href: "#problem" },
+    { label: "Why it matters", href: "#problem" },
     { label: "How it works", href: "#how-it-works" },
     { label: "Prices", href: "#prices" },
   ] as const;
@@ -181,7 +181,9 @@ function Navbar() {
     <header className="section-wrap reveal pt-4">
       <div className="relative rounded-2xl border-2 border-[var(--slate-grey)] bg-[var(--page-background)] px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-4">
-          <Logo />
+          <Link href="#top" aria-label="Go to the top of the page" className="shrink-0">
+            <Logo />
+          </Link>
           <button
             type="button"
             className="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-[var(--slate-grey)] bg-[var(--surface)] text-[var(--slate-grey)] transition-colors duration-200 hover:bg-[var(--coral-orange-soft)] lg:hidden"
@@ -934,7 +936,7 @@ function CtaSection() {
 
 function FooterSection() {
   const footerLinks = [
-    { label: "Problem", href: "#problem" },
+    { label: "Why it matters", href: "#problem" },
     { label: "How it works", href: "#how-it-works" },
     { label: "Terms", href: "#" },
   ] as const;
@@ -949,13 +951,15 @@ function FooterSection() {
       <div className="section-wrap px-6">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-10">
           <div className="flex flex-col items-center gap-6 lg:min-w-[360px] lg:gap-5">
-            <img
-              src={ASSETS.logoWhite}
-              alt="cv sapiens"
-              width={285}
-              height={39}
-              className="h-auto w-[220px] sm:w-[250px] lg:w-[285px]"
-            />
+            <Link href="#top" aria-label="Go to the top of the page" className="transition-opacity duration-200 hover:opacity-90">
+              <img
+                src={ASSETS.logoWhite}
+                alt="cv sapiens"
+                width={285}
+                height={39}
+                className="h-auto w-[220px] sm:w-[250px] lg:w-[285px]"
+              />
+            </Link>
             <div className="flex items-center justify-center gap-4">
               {socialLinks.map((social) => (
                 <Link
@@ -994,7 +998,7 @@ function FooterSection() {
 
 export default function Home() {
   return (
-    <main className="bg-[var(--page-background)] text-[var(--text-primary)]">
+    <main id="top" className="bg-[var(--page-background)] text-[var(--text-primary)]">
       <Navbar />
       <HeroSection />
       <ProblemSection />

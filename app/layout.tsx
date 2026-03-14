@@ -3,7 +3,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CV Sapiens | Resume Builder",
+  title: "cv sapiens | Resume Builder",
+  icons: {
+    icon: "/favicon.png",
+  },
   description:
     "Build a resume that passes ATS and gets interviews with CV Sapiens.",
 };
