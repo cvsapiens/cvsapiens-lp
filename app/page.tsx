@@ -6,6 +6,7 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 const ASSETS = {
   logoBlack: "/illustration-icons-lp-svg/logo-horizontal-black.svg",
   logoDefault: "/illustration-icons-lp-svg/logo-horizontal-default.svg",
+  logoWhite: "/illustration-icons-lp-svg/logo-horizontal-white.svg",
   logoVerticalBlack: "/illustration-icons-lp-svg/logo-vertical-black.svg",
   heroShapeOne: "/illustration-icons-lp-svg/iilustration-shape-one.svg",
   heroShapeTwo: "/illustration-icons-lp-svg/iilustration-shape-two.svg",
@@ -29,7 +30,9 @@ const ASSETS = {
   impactTitleThree: "/illustration-icons-lp-svg/illustration-impact-three.svg",
   sapienVideo: "/illustration-icons-lp-svg/sapien-video-02.mp4",
   ctaIllustration: "/illustration-icons-lp-svg/sapien-svg.svg",
-  footerShapes: "/illustration-icons-lp-svg/illustration-footer.svg",
+  instagramLogo: "/illustration-icons-lp-svg/instagram-logo.svg",
+  linkedinLogo: "/illustration-icons-lp-svg/linkedin-logo.svg",
+  facebookLogo: "/illustration-icons-lp-svg/facebook-logo.svg",
 } as const;
 
 type ButtonVariant = "primary" | "secondary" | "tertiary";
@@ -404,15 +407,6 @@ function ProblemSection() {
             </div>
           </article>
 
-          <img
-            src={ASSETS.secondSectionArrow}
-            alt=""
-            aria-hidden
-            width={146}
-            height={17}
-            className="absolute left-[290px] top-[202px] h-[17px] w-[146px]"
-          />
-
           <article className="absolute left-[428px] top-[202px] h-[321px] w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
             <img
               src={ASSETS.problemSecondSection}
@@ -428,14 +422,24 @@ function ProblemSection() {
             </div>
           </article>
 
-          <img
-            src={ASSETS.secondSectionArrow}
-            alt=""
-            aria-hidden
-            width={146}
-            height={17}
-            className="absolute left-[718px] top-[202px] h-[17px] w-[146px]"
-          />
+          <div className="absolute left-[290px] top-[363px] flex -translate-y-1/2 items-center gap-[282px]">
+            <img
+              src={ASSETS.secondSectionArrow}
+              alt=""
+              aria-hidden
+              width={146}
+              height={17}
+              className="h-[17px] w-[146px]"
+            />
+            <img
+              src={ASSETS.secondSectionArrow}
+              alt=""
+              aria-hidden
+              width={146}
+              height={17}
+              className="h-[17px] w-[146px]"
+            />
+          </div>
 
           <article className="absolute left-[856px] top-[202px] h-[321px] w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
             <img
@@ -931,30 +935,59 @@ function FooterSection() {
       { label: "Help", href: "#faq" },
     ],
   ] as const;
+  const footerLinks = [
+    { label: "Problem", href: "#problem" },
+    { label: "How it works", href: "#how-it-works" },
+    { label: "Terms", href: "#" },
+  ] as const;
+  const socialLinks = [
+    { label: "Instagram", href: "#", icon: ASSETS.instagramLogo },
+    { label: "LinkedIn", href: "#", icon: ASSETS.linkedinLogo },
+    { label: "Facebook", href: "#", icon: ASSETS.facebookLogo },
+  ] as const;
 
   return (
-    <footer id="faq" className="mt-8 border-t-2 border-[var(--slate-grey)] py-16 lg:py-[66px]">
-      <div className="section-wrap flex flex-col gap-12 px-6 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex justify-center lg:w-[237px] lg:justify-start">
-          <img
-            src={ASSETS.logoVerticalBlack}
-            alt="cv sapiens"
-            width={237}
-            height={128}
-            className="h-auto w-[180px] lg:w-[237px]"
-          />
-        </div>
-        <div className="mx-auto hidden h-[150px] w-[2px] shrink-0 bg-[var(--slate-grey)] lg:block" />
-        <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:ml-auto lg:justify-items-start">
-          {footerColumns.map((column, index) => (
-            <div key={index} className="flex flex-col items-center gap-5 md:items-start">
-              {column.map((item) => (
-                <ActionButton key={item.label} variant="tertiary" href={item.href} className="text-[18px] leading-[1.43]">
+    <footer id="faq" className="mt-8 bg-[var(--slate-grey)] py-10 sm:py-12 lg:py-[46px]">
+      <div className="section-wrap px-6">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-10">
+          <div className="flex flex-col items-center gap-6 lg:min-w-[360px] lg:gap-5">
+            <img
+              src={ASSETS.logoWhite}
+              alt="cv sapiens"
+              width={285}
+              height={39}
+              className="h-auto w-[220px] sm:w-[250px] lg:w-[285px]"
+            />
+            <div className="flex items-center justify-center gap-4">
+              {socialLinks.map((social) => (
+                <Link
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="transition-transform duration-200 hover:scale-[1.05]"
+                >
+                  <img src={social.icon} alt="" aria-hidden width={20} height={20} className="h-5 w-5" />
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="mx-auto h-px w-full bg-[rgba(236,231,226,0.26)] lg:hidden" />
+          <div className="hidden h-[120px] w-px shrink-0 bg-[rgba(236,231,226,0.82)] lg:block" />
+          <div className="flex flex-1 flex-col items-center gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+            <nav className="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-10 sm:gap-y-4 lg:justify-start lg:gap-16 lg:gap-y-0">
+              {footerLinks.map((item) => (
+                <ActionButton
+                  key={item.label}
+                  variant="tertiary"
+                  href={item.href}
+                  className="!text-[var(--white)] text-[18px] leading-[1.43] hover:!text-[var(--coral-orange-soft)]"
+                >
                   {item.label}
                 </ActionButton>
               ))}
-            </div>
-          ))}
+            </nav>
+            <p className="text-center text-[18px] leading-[1.4] text-[var(--ink-300)] lg:text-right">© 2026 cv sapiens</p>
+          </div>
         </div>
       </div>
     </footer>
