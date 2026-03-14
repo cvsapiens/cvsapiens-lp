@@ -35,6 +35,11 @@ const ASSETS = {
   facebookLogo: "/illustration-icons-lp-svg/facebook-logo.svg",
 } as const;
 
+const AUTH_URLS = {
+  login: "https://app.cvsapiens.com/auth/signin",
+  signUp: "https://app.cvsapiens.com/auth/signup",
+} as const;
+
 type ButtonVariant = "primary" | "secondary" | "tertiary";
 
 type ActionButtonProps = {
@@ -203,14 +208,14 @@ function Navbar() {
             <ActionButton
               variant="secondary"
               className="min-h-[38px] px-6 py-2 text-[18px]"
-              href="https://app.cvsapiens.com/auth/signin"
+              href={AUTH_URLS.login}
             >
               Log in
             </ActionButton>
             <ActionButton
               variant="primary"
               className="min-h-[38px] px-6 py-2 text-[18px]"
-              href="https://app.cvsapiens.com/auth/signup"
+              href={AUTH_URLS.signUp}
             >
               Sign up
             </ActionButton>
@@ -241,7 +246,7 @@ function Navbar() {
               <ActionButton
                 variant="secondary"
                 className="min-h-[48px] px-6 py-2 text-[18px]"
-                href="https://app.cvsapiens.com/auth/signin"
+                href={AUTH_URLS.login}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Log in
@@ -249,7 +254,7 @@ function Navbar() {
               <ActionButton
                 variant="primary"
                 className="min-h-[48px] px-6 py-2 text-[18px]"
-                href="https://app.cvsapiens.com/auth/signup"
+                href={AUTH_URLS.signUp}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Sign up
@@ -277,7 +282,9 @@ function HeroSection() {
           <br />
           Match job descriptions, improve keywords, and export a clean, professional PDF.
         </p>
-        <ActionButton className="mt-7 w-full sm:mt-8 sm:w-fit">Start Free Trial</ActionButton>
+        <ActionButton className="mt-7 w-full sm:mt-8 sm:w-fit" href={AUTH_URLS.signUp}>
+          Start Free Trial
+        </ActionButton>
       </div>
       <div className="mx-auto grid w-full max-w-[360px] grid-cols-3 items-center justify-items-center gap-3 sm:max-w-[520px] sm:gap-4 lg:max-w-[560px] lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-24 lg:gap-y-4">
         <img
@@ -726,6 +733,7 @@ function PricingSection() {
               <ActionButton
                 variant={plan.variant === "trial" ? "secondary" : "primary"}
                 className="mt-6 w-full px-6"
+                href={AUTH_URLS.signUp}
               >
                 {plan.cta}
               </ActionButton>
@@ -916,25 +924,15 @@ function CtaSection() {
             your skills in a way that both ATS systems and recruiters understand.
           </p>
         </div>
-        <ActionButton className="mt-12 lg:mt-[48px]">Start Free Trial</ActionButton>
+        <ActionButton className="mt-12 lg:mt-[48px]" href={AUTH_URLS.signUp}>
+          Start Free Trial
+        </ActionButton>
       </div>
     </section>
   );
 }
 
 function FooterSection() {
-  const footerColumns = [
-    [
-      { label: "Problem", href: "#problem" },
-      { label: "How it works", href: "#how-it-works" },
-      { label: "Terms", href: "#" },
-    ],
-    [
-      { label: "Log in", href: "https://app.cvsapiens.com/auth/signin" },
-      { label: "Sign up", href: "https://app.cvsapiens.com/auth/signup" },
-      { label: "Help", href: "#faq" },
-    ],
-  ] as const;
   const footerLinks = [
     { label: "Problem", href: "#problem" },
     { label: "How it works", href: "#how-it-works" },
