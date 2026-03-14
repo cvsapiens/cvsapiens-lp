@@ -197,10 +197,18 @@ function Navbar() {
                 {item.label}
               </ActionButton>
             ))}
-            <ActionButton variant="secondary" className="min-h-[38px] px-6 py-2 text-[18px]">
+            <ActionButton
+              variant="secondary"
+              className="min-h-[38px] px-6 py-2 text-[18px]"
+              href="https://app.cvsapiens.com/auth/signin"
+            >
               Log in
             </ActionButton>
-            <ActionButton variant="primary" className="min-h-[38px] px-6 py-2 text-[18px]">
+            <ActionButton
+              variant="primary"
+              className="min-h-[38px] px-6 py-2 text-[18px]"
+              href="https://app.cvsapiens.com/auth/signup"
+            >
               Sign up
             </ActionButton>
           </nav>
@@ -227,10 +235,20 @@ function Navbar() {
               ))}
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <ActionButton variant="secondary" className="min-h-[48px] px-6 py-2 text-[18px]" onClick={() => setIsMenuOpen(false)}>
+              <ActionButton
+                variant="secondary"
+                className="min-h-[48px] px-6 py-2 text-[18px]"
+                href="https://app.cvsapiens.com/auth/signin"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Log in
               </ActionButton>
-              <ActionButton variant="primary" className="min-h-[48px] px-6 py-2 text-[18px]" onClick={() => setIsMenuOpen(false)}>
+              <ActionButton
+                variant="primary"
+                className="min-h-[48px] px-6 py-2 text-[18px]"
+                href="https://app.cvsapiens.com/auth/signup"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Sign up
               </ActionButton>
             </div>
@@ -908,8 +926,8 @@ function FooterSection() {
       { label: "Terms", href: "#" },
     ],
     [
-      { label: "Log in", href: "#" },
-      { label: "Sign up", href: "#" },
+      { label: "Log in", href: "https://app.cvsapiens.com/auth/signin" },
+      { label: "Sign up", href: "https://app.cvsapiens.com/auth/signup" },
       { label: "Help", href: "#faq" },
     ],
   ] as const;
