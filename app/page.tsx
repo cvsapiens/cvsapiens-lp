@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 const ASSETS = {
@@ -166,7 +167,7 @@ function ScrollArrowButton({
 function Logo({ dark = true }: { dark?: boolean }) {
   const logo = dark ? ASSETS.logoBlack : ASSETS.logoDefault;
 
-  return <img src={logo} alt="cv sapiens" width={623} height={92} className="h-8 w-auto" />;
+  return <Image src={logo} alt="cv sapiens" width={623} height={92} className="h-8 w-auto" />;
 }
 
 function Navbar() {
@@ -289,37 +290,47 @@ function HeroSection() {
         </ActionButton>
       </div>
       <div className="mx-auto grid w-full max-w-[360px] grid-cols-3 items-center justify-items-center gap-3 sm:max-w-[520px] sm:gap-4 lg:max-w-[560px] lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-24 lg:gap-y-4">
-        <img
+        <Image
           src={ASSETS.heroShapeOne}
           alt=""
           aria-hidden
+          width={182}
+          height={188}
           className="order-1 h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:order-1 lg:h-[188px] lg:w-[182px]"
         />
-        <img
+        <Image
           src={ASSETS.heroSapienEdit}
           alt=""
           aria-hidden
+          width={214}
+          height={195}
           className="order-2 h-[110px] w-[122px] sm:h-[148px] sm:w-[162px] lg:order-2 lg:h-[195px] lg:w-[214px]"
         />
-        <img
+        <Image
           src={ASSETS.heroShapeTwo}
           alt=""
           aria-hidden
+          width={182}
+          height={188}
           className="order-3 h-[96px] w-[92px] sm:h-[132px] sm:w-[128px] lg:order-4 lg:h-[188px] lg:w-[182px]"
         />
-        <img
+        <Image
           src={ASSETS.heroSapienHappy}
           alt=""
           aria-hidden
+          width={257}
+          height={189}
           className="order-4 h-[110px] w-[148px] sm:h-[150px] sm:w-[202px] lg:order-3 lg:h-[189px] lg:w-[257px]"
         />
         <div className="shape-three-rotator order-5 h-[94px] w-[94px] sm:h-[128px] sm:w-[128px] lg:order-5 lg:h-[184px] lg:w-[184px]">
-          <img src={ASSETS.heroShapeThree} alt="" aria-hidden className="h-full w-full" />
+          <Image src={ASSETS.heroShapeThree} alt="" aria-hidden width={184} height={184} className="h-full w-full" />
         </div>
-        <img
+        <Image
           src={ASSETS.heroSapienThinking}
           alt=""
           aria-hidden
+          width={205}
+          height={188}
           className="order-6 h-[104px] w-[114px] sm:h-[144px] sm:w-[156px] lg:order-6 lg:h-[188px] lg:w-[205px]"
         />
       </div>
@@ -377,7 +388,7 @@ function ProblemSection() {
                   key={card.title}
                   className="flex min-h-[306px] w-[286px] shrink-0 snap-start flex-col rounded-[24px] bg-[var(--neutral-100)] px-6 py-6 sm:w-[320px] sm:px-8"
                 >
-                  <img
+                  <Image
                     src={ASSETS.problemSecondSection}
                     alt=""
                     aria-hidden
@@ -402,7 +413,7 @@ function ProblemSection() {
           <h2 className="absolute left-0 top-0 max-w-[604px] text-[60px] leading-[1.05]">Most resumes never reach a human</h2>
 
           <article className="absolute left-0 top-[202px] h-[321px] w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
-            <img
+            <Image
               src={ASSETS.problemSecondSection}
               alt=""
               aria-hidden
@@ -417,7 +428,7 @@ function ProblemSection() {
           </article>
 
           <article className="absolute left-[428px] top-[202px] h-[321px] w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
-            <img
+            <Image
               src={ASSETS.problemSecondSection}
               alt=""
               aria-hidden
@@ -432,7 +443,7 @@ function ProblemSection() {
           </article>
 
           <div className="absolute left-[290px] top-[363px] flex -translate-y-1/2 items-center gap-[282px]">
-            <img
+            <Image
               src={ASSETS.secondSectionArrow}
               alt=""
               aria-hidden
@@ -440,7 +451,7 @@ function ProblemSection() {
               height={17}
               className="h-[17px] w-[146px]"
             />
-            <img
+            <Image
               src={ASSETS.secondSectionArrow}
               alt=""
               aria-hidden
@@ -451,7 +462,7 @@ function ProblemSection() {
           </div>
 
           <article className="absolute left-[856px] top-[202px] h-[321px] w-[290px] rounded-[20px] bg-[var(--neutral-100)] px-8 py-6">
-            <img
+            <Image
               src={ASSETS.problemSecondSection}
               alt=""
               aria-hidden
@@ -514,16 +525,13 @@ function HowItWorksSection() {
     <section id="how-it-works" className="border-b-2 border-[var(--slate-grey)] bg-[var(--surface)] py-16 lg:py-[53px]">
       <div className="section-wrap px-6">
         <div className="mx-auto max-w-[1244px]">
-          <picture>
-            <source srcSet={ASSETS.sapiensBannerAvif} type="image/avif" />
-            <img
-              src={ASSETS.sapiensBannerPng}
-              alt="CV Sapiens characters banner"
-              width={1244}
-              height={174}
-              className="mx-auto h-auto w-full"
-            />
-          </picture>
+          <Image
+            src={ASSETS.sapiensBannerPng}
+            alt="CV Sapiens characters banner"
+            width={1244}
+            height={174}
+            className="mx-auto h-auto w-full"
+          />
         </div>
 
         <h2 className="mx-auto mt-14 max-w-[697px] text-center text-[38px] leading-[1.02] sm:mt-20 sm:text-[52px] lg:mt-[102px] lg:text-[60px]">
@@ -704,7 +712,7 @@ function PricingSection() {
             >
               {plan.variant === "trial" && (
                 <div className="limited-offer-rotator absolute right-4 top-4 z-10 w-[88px] sm:w-[108px] lg:-left-[48px] lg:-top-[102px] lg:right-auto lg:w-[132px] xl:-left-[56px] xl:-top-[120px] xl:w-[152px]">
-                  <img src={ASSETS.limitedOfferBadge} alt="Limited offer badge" width={152} height={152} />
+                  <Image src={ASSETS.limitedOfferBadge} alt="Limited offer badge" width={152} height={152} />
                 </div>
               )}
               {plan.variant === "featured" && (
@@ -742,7 +750,7 @@ function PricingSection() {
               <ul className="mt-6 space-y-4">
                 {plan.features.map((feature) => (
                   <li key={feature.label} className="flex items-start gap-3">
-                    <img
+                    <Image
                       src={feature.included ? ASSETS.check : ASSETS.cross}
                       alt=""
                       aria-hidden
@@ -797,7 +805,7 @@ function PointersSection() {
         <span className="block font-light">cv sapiens helps you</span>
         <span className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 sm:mt-4">
           <span className="font-medium italic">build stronger resumes</span>
-          <img
+          <Image
             src={ASSETS.impactTitleThree}
             alt=""
             aria-hidden
@@ -807,7 +815,7 @@ function PointersSection() {
           />
         </span>
         <span className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 sm:mt-4">
-          <img
+          <Image
             src={ASSETS.impactTitleOne}
             alt=""
             aria-hidden
@@ -817,7 +825,7 @@ function PointersSection() {
           />
           <span className="font-medium italic">match job descriptions</span>
           <span className="font-light">and</span>
-          <img
+          <Image
             src={ASSETS.impactTitleTwo}
             alt=""
             aria-hidden
@@ -831,7 +839,7 @@ function PointersSection() {
       <h2 className="mx-auto hidden max-w-[1040px] text-center text-[60px] leading-[1.26] tracking-[-1px] text-[var(--text-primary)] lg:block">
         <span className="flex items-center justify-center gap-5">
           <span className="font-light">cv sapiens helps you</span>
-          <img
+          <Image
             src={ASSETS.impactTitleThree}
             alt=""
             aria-hidden
@@ -843,7 +851,7 @@ function PointersSection() {
         </span>
         <span className="mt-3 flex items-center justify-center gap-4">
           <span className="font-medium italic">resumes,</span>
-          <img
+          <Image
             src={ASSETS.impactTitleOne}
             alt=""
             aria-hidden
@@ -855,7 +863,7 @@ function PointersSection() {
           <span className="font-light">and</span>
         </span>
         <span className="mt-3 flex items-center justify-center gap-4">
-          <img
+          <Image
             src={ASSETS.impactTitleTwo}
             alt=""
             aria-hidden
@@ -876,7 +884,7 @@ function PointersSection() {
             )}
           >
             <article className="flex gap-5 px-4 md:px-[55px]">
-              <img src={row[0].icon} alt="" aria-hidden width={56} height={56} className="mt-1 h-[56px] w-[56px] shrink-0" />
+              <Image src={row[0].icon} alt="" aria-hidden width={56} height={56} className="mt-1 h-[56px] w-[56px] shrink-0" />
               <div>
                 <h3 className="max-w-[276px] text-[32px] font-medium leading-[1.2] tracking-[0.5px] text-[var(--text-primary)]">
                   {row[0].title}
@@ -886,7 +894,7 @@ function PointersSection() {
             </article>
             <div className="pointer-divider hidden h-[148px] w-[2px] self-center bg-[var(--slate-grey)] md:block" />
             <article className="flex gap-5 px-4 md:px-[55px]">
-              <img src={row[1].icon} alt="" aria-hidden width={56} height={56} className="mt-1 h-[56px] w-[56px] shrink-0" />
+              <Image src={row[1].icon} alt="" aria-hidden width={56} height={56} className="mt-1 h-[56px] w-[56px] shrink-0" />
               <div>
                 <h3 className="max-w-[276px] text-[32px] font-medium leading-[1.2] tracking-[0.5px] text-[var(--text-primary)]">
                   {row[1].title}
@@ -952,7 +960,7 @@ function FooterSection() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-10">
           <div className="flex flex-col items-center gap-6 lg:min-w-[360px] lg:gap-5">
             <Link href="#top" aria-label="Go to the top of the page" className="transition-opacity duration-200 hover:opacity-90">
-              <img
+              <Image
                 src={ASSETS.logoWhite}
                 alt="cv sapiens"
                 width={285}
@@ -968,7 +976,7 @@ function FooterSection() {
                   aria-label={social.label}
                   className="transition-transform duration-200 hover:scale-[1.05]"
                 >
-                  <img src={social.icon} alt="" aria-hidden width={20} height={20} className="h-5 w-5" />
+                  <Image src={social.icon} alt="" aria-hidden width={20} height={20} className="h-5 w-5" />
                 </Link>
               ))}
             </div>
