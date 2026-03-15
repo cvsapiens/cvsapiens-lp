@@ -47,6 +47,7 @@ type ActionButtonProps = {
   children: ReactNode;
   variant?: ButtonVariant;
   href?: string;
+  scrollTarget?: string;
   className?: string;
   onClick?: () => void;
 };
@@ -64,6 +65,23 @@ type Plan = {
 
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
+}
+
+function scrollToSection(targetId: string) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const behavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
+
+  if (targetId === "top") {
+    window.scrollTo({ top: 0, behavior });
+  } else {
+    document.getElementById(targetId)?.scrollIntoView({ behavior, block: "start" });
+  }
+
+  window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
 }
 
 function useHorizontalRail() {
@@ -112,9 +130,9 @@ function useHorizontalRail() {
   return { railRef, scrollState, scrollRail };
 }
 
-function ActionButton({ children, variant = "primary", href = "#", className, onClick }: ActionButtonProps) {
+function ActionButton({ children, variant = "primary", href = "#", scrollTarget, className, onClick }: ActionButtonProps) {
   const baseClasses =
-    "inline-flex min-h-[52px] items-center justify-center rounded-[43px] px-8 font-normal text-[18px] leading-[1.4] tracking-[0.2px] transition-colors duration-200";
+    "inline-flex min-h-[52px] cursor-pointer items-center justify-center rounded-[43px] px-8 font-normal text-[18px] leading-[1.4] tracking-[0.2px] transition-colors duration-200";
   const styles: Record<ButtonVariant, string> = {
     primary:
       "bg-[var(--slate-grey)] !text-[var(--white)] [text-shadow:0_1px_0_rgba(0,0,0,0.32)] hover:bg-[var(--coral-orange-hover)] hover:!text-[var(--white)]",
@@ -123,6 +141,21 @@ function ActionButton({ children, variant = "primary", href = "#", className, on
     tertiary:
       "min-h-0 rounded-none px-0 !text-[var(--slate-grey)] hover:!text-[var(--coral-orange-hover)]",
   };
+
+  if (scrollTarget) {
+    return (
+      <button
+        type="button"
+        onClick={() => {
+          scrollToSection(scrollTarget);
+          onClick?.();
+        }}
+        className={cn(baseClasses, styles[variant], className)}
+      >
+        {children}
+      </button>
+    );
+  }
 
   return (
     <Link href={href} onClick={onClick} className={cn(baseClasses, styles[variant], className)}>
@@ -173,18 +206,23 @@ function Logo({ dark = true }: { dark?: boolean }) {
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navItems = [
-    { label: "Why it matters", href: "#why-it-matters" },
-    { label: "How it works", href: "#how-it-works" },
-    { label: "Prices", href: "#prices" },
+    { label: "Why it matters", target: "why-it-matters" },
+    { label: "How it works", target: "how-it-works" },
+    { label: "Prices", target: "prices" },
   ] as const;
 
   return (
     <header className="section-wrap reveal pt-4">
       <div className="relative rounded-2xl border-2 border-[var(--slate-grey)] bg-[var(--page-background)] px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-4">
-          <Link href="#top" aria-label="Go to the top of the page" className="shrink-0">
+          <button
+            type="button"
+            aria-label="Go to the top of the page"
+            onClick={() => scrollToSection("top")}
+            className="shrink-0 cursor-pointer"
+          >
             <Logo />
-          </Link>
+          </button>
           <button
             type="button"
             className="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-[var(--slate-grey)] bg-[var(--surface)] text-[var(--slate-grey)] transition-colors duration-200 hover:bg-[var(--coral-orange-soft)] lg:hidden"
@@ -204,7 +242,7 @@ function Navbar() {
           </button>
           <nav className="hidden items-center gap-8 lg:flex">
             {navItems.map((item) => (
-              <ActionButton key={item.label} variant="tertiary" className="text-[18px]" href={item.href}>
+              <ActionButton key={item.label} variant="tertiary" className="text-[18px]" scrollTarget={item.target}>
                 {item.label}
               </ActionButton>
             ))}
@@ -237,7 +275,7 @@ function Navbar() {
                 <ActionButton
                   key={item.label}
                   variant="tertiary"
-                  href={item.href}
+                  scrollTarget={item.target}
                   className="min-h-[48px] justify-start rounded-[18px] px-4 text-[18px]"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -944,8 +982,8 @@ function CtaSection() {
 
 function FooterSection() {
   const footerLinks = [
-    { label: "Why it matters", href: "#why-it-matters" },
-    { label: "How it works", href: "#how-it-works" },
+    { label: "Why it matters", target: "why-it-matters" },
+    { label: "How it works", target: "how-it-works" },
     { label: "Terms", href: "#" },
   ] as const;
   const socialLinks = [
@@ -959,7 +997,12 @@ function FooterSection() {
       <div className="section-wrap px-6">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-10">
           <div className="flex flex-col items-center gap-6 lg:min-w-[360px] lg:gap-5">
-            <Link href="#top" aria-label="Go to the top of the page" className="transition-opacity duration-200 hover:opacity-90">
+            <button
+              type="button"
+              aria-label="Go to the top of the page"
+              onClick={() => scrollToSection("top")}
+              className="cursor-pointer transition-opacity duration-200 hover:opacity-90"
+            >
               <Image
                 src={ASSETS.logoWhite}
                 alt="cv sapiens"
@@ -967,7 +1010,7 @@ function FooterSection() {
                 height={39}
                 className="h-auto w-[220px] sm:w-[250px] lg:w-[285px]"
               />
-            </Link>
+            </button>
             <div className="flex items-center justify-center gap-4">
               {socialLinks.map((social) => (
                 <Link
@@ -989,7 +1032,8 @@ function FooterSection() {
                 <ActionButton
                   key={item.label}
                   variant="tertiary"
-                  href={item.href}
+                  scrollTarget={"target" in item ? item.target : undefined}
+                  href={"href" in item ? item.href : undefined}
                   className="!text-[var(--white)] text-[18px] leading-[1.43] hover:!text-[var(--coral-orange-soft)]"
                 >
                   {item.label}
