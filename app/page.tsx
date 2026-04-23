@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
 
 const ASSETS = {
   logoBlack: "/illustration-icons-lp-svg/logo-horizontal-black.svg",
@@ -132,14 +132,20 @@ function useHorizontalRail() {
 
 function ActionButton({ children, variant = "primary", href = "#", scrollTarget, className, onClick }: ActionButtonProps) {
   const baseClasses =
-    "inline-flex min-h-[52px] cursor-pointer items-center justify-center rounded-[43px] px-8 font-normal text-[18px] leading-[1.4] tracking-[0.2px] transition-colors duration-200";
+    "inline-flex min-h-[52px] cursor-pointer items-center justify-center rounded-[43px] border-2 border-[var(--slate-grey)] px-8 font-[family:var(--font-zilla-slab)] text-[18px] font-medium leading-[1.4] tracking-[0.2px]";
+  const motionClass = variant === "tertiary" ? undefined : "cta-depth-motion";
+  const typographyStyle: CSSProperties = {
+    fontFamily: "var(--font-zilla-slab), serif",
+    fontSize: "18px",
+    fontWeight: 500,
+  };
   const styles: Record<ButtonVariant, string> = {
     primary:
-      "bg-[var(--slate-grey)] !text-[var(--white)] [text-shadow:0_1px_0_rgba(0,0,0,0.32)] hover:bg-[var(--coral-orange-hover)] hover:!text-[var(--white)]",
+      "bg-[var(--slate-grey)] !text-[var(--white)] [text-shadow:0_1px_0_rgba(0,0,0,0.32)] hover:bg-[var(--slate-grey)] hover:!text-[var(--white)]",
     secondary:
-      "border border-[var(--slate-grey)] text-[var(--slate-grey)] bg-transparent hover:border-[var(--slate-grey)] hover:bg-[var(--coral-orange-soft)] hover:text-[var(--slate-grey)]",
+      "bg-[var(--white)] text-[var(--slate-grey)] hover:border-[var(--slate-grey)] hover:bg-[var(--white)] hover:text-[var(--slate-grey)]",
     tertiary:
-      "min-h-0 rounded-none px-0 !text-[var(--slate-grey)] hover:!text-[var(--coral-orange-hover)]",
+      "min-h-0 rounded-none !border-0 px-0 text-[18px] font-[family:var(--font-zilla-slab)] font-medium !text-[var(--slate-grey)] transition-colors duration-200 hover:translate-y-0 hover:shadow-none hover:!text-[var(--coral-orange-hover)] active:translate-y-0 active:shadow-none",
   };
 
   if (scrollTarget) {
@@ -150,7 +156,8 @@ function ActionButton({ children, variant = "primary", href = "#", scrollTarget,
           scrollToSection(scrollTarget);
           onClick?.();
         }}
-        className={cn(baseClasses, styles[variant], className)}
+        style={typographyStyle}
+        className={cn(baseClasses, motionClass, styles[variant], className)}
       >
         {children}
       </button>
@@ -158,7 +165,7 @@ function ActionButton({ children, variant = "primary", href = "#", scrollTarget,
   }
 
   return (
-    <Link href={href} onClick={onClick} className={cn(baseClasses, styles[variant], className)}>
+    <Link href={href} onClick={onClick} style={typographyStyle} className={cn(baseClasses, motionClass, styles[variant], className)}>
       {children}
     </Link>
   );
