@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/*.html"
+        ],
+        "createdAt": "2026-10-30T05:41:25.905Z",
+        "reason": "Brand commitment: #fbf8f5 is the app's binding paper ground (../cvsapiens/PRODUCT.md, owner-confirmed); user chose the app palette for this page on 2026-10-30"
+      }
+    ]
+  }
+}

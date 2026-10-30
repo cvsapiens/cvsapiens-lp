@@ -1,14 +1,46 @@
-/* eslint-disable @next/next/no-page-custom-font */
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
+import { content } from "./content/en";
 import "./globals.css";
 
+const sans = localFont({
+  src: [
+    { path: "./fonts/google-sans-flex-400.ttf", weight: "400" },
+    { path: "./fonts/google-sans-flex-500.ttf", weight: "500" },
+    { path: "./fonts/google-sans-flex-600.ttf", weight: "600" },
+  ],
+  variable: "--font-sans",
+  display: "swap",
+  fallback: ["Arial", "sans-serif"],
+});
+
+const slab = localFont({
+  src: [
+    { path: "./fonts/zilla-slab-500.ttf", weight: "500" },
+    { path: "./fonts/zilla-slab-600.ttf", weight: "600" },
+  ],
+  variable: "--font-slab",
+  display: "swap",
+  fallback: ["Georgia", "serif"],
+});
+
 export const metadata: Metadata = {
-  title: "cv sapiens | Resume Builder",
-  icons: {
-    icon: "/favicon.png",
+  metadataBase: new URL("https://cvsapiens.com"),
+  title: content.meta.title,
+  description: content.meta.description,
+  icons: { icon: "/favicon.png" },
+  openGraph: {
+    title: content.meta.title,
+    description: content.meta.description,
+    url: "https://cvsapiens.com",
+    siteName: "cv sapiens",
+    type: "website",
   },
-  description:
-    "Build a resume that passes ATS and gets interviews with CV Sapiens.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#fbf8f5",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -17,16 +49,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500&display=swap"
-        />
-      </head>
-      <body className="antialiased">{children}</body>
+    <html lang="en" className={`${sans.variable} ${slab.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
