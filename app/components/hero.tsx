@@ -3,7 +3,7 @@ import { HeroVideo } from "./hero-video";
 import { Thread, type ThreadStop } from "./thread";
 import { ButtonLink, MarkedText } from "./ui";
 
-const { hero, example, demo } = content;
+const { hero, example } = content;
 
 // The thread starts at the posting's first marked requirement. Over the paper it is drawn
 // on top; past the posting's edge it runs behind, into the demo film's left edge, behind
@@ -24,7 +24,6 @@ export function ExamplePosting() {
     <article className="posting doc" aria-label={posting.label}>
       <span className="pin" aria-hidden />
       <span className="anchor posting__anchor" data-thread-pin="posting" aria-hidden />
-      <span className="stamp">{example.stamp}</span>
       <p className="posting__title">{posting.title}</p>
       <p className="posting__company">
         {posting.company} <span aria-hidden>·</span> {posting.meta}
@@ -61,7 +60,6 @@ export function Hero() {
               {hero.secondary}
             </a>
           </div>
-          <p className="reassure">{hero.reassurance}</p>
         </div>
         <div className="hero__posting">
           <ExamplePosting />
@@ -74,10 +72,9 @@ export function Hero() {
             height={184}
           />
         </div>
-        <figure className="hero__scene">
+        <div className="hero__scene">
           <HeroVideo />
-          <figcaption className="example-note">{demo.note}</figcaption>
-        </figure>
+        </div>
       </div>
     </section>
   );

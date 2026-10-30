@@ -6,6 +6,7 @@ import { Honest } from "./components/honest";
 import { HowItWorks } from "./components/how-it-works";
 import { KitSpread } from "./components/kit-spread";
 import { Pricing } from "./components/pricing";
+import { Showcase } from "./components/showcase";
 import { Problem } from "./components/problem";
 import { SiteFooter } from "./components/site-footer";
 import { SiteNav } from "./components/site-nav";
@@ -23,6 +24,7 @@ export default function Home() {
         <Hero />
         <Problem />
         <HowItWorks />
+        <Showcase />
         <KitSpread />
         <Honest />
         <Pricing />

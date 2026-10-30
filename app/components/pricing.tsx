@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { APP_URLS, content } from "../content/en";
 import { Thread, type ThreadStop } from "./thread";
-import { ButtonLink, CheckIcon, Clip, DashIcon, cn } from "./ui";
+import { ButtonLink, CheckIcon, Clip, cn } from "./ui";
 
 const { pricing } = content;
 
@@ -18,7 +18,7 @@ export function Pricing() {
   const [free, ...paid] = pricing.plans;
 
   return (
-    <section id="pricing" className="band band--deep" aria-labelledby="pricing-title">
+    <section id="pricing" className="band" aria-labelledby="pricing-title">
       <div className="container lane">
         <Thread stops={THREAD} />
         <div className="section-head pricing__head">
@@ -29,45 +29,41 @@ export function Pricing() {
             <p className="body-lg">{pricing.lead}</p>
           </div>
           <Image
-            src="/illustrations/subscription-activated.png"
+            src="/illustrations/ai-generation-ready.svg"
             alt=""
             width={1536}
             height={1024}
-            sizes="(min-width: 1024px) 300px, 60vw"
             className="pricing__art"
           />
         </div>
 
         <div className="plans">
+          {/* Each plan is top, button, terms (and Free's list): rows the plans share on wide screens,
+              so every button lines up however long the copy above it runs. */}
           <div className="plan plan--free">
-            <h3 className="plan__name">{free.name}</h3>
-            <p className="plan__price">
-              <span className="figure">{free.price}</span>
-              <span className="plan__cadence">{free.cadence}</span>
-            </p>
-            <p className="plan__summary">{free.summary}</p>
+            <div className="plan__top">
+              <h3 className="plan__name">{free.name}</h3>
+              <p className="plan__price">
+                <span className="figure">{free.price}</span>
+                <span className="plan__cadence">{free.cadence}</span>
+              </p>
+              <p className="plan__summary">{free.summary}</p>
+            </div>
             <ButtonLink href={APP_URLS.signUp} variant="secondary" className="plan__cta">
               {free.cta}
             </ButtonLink>
             <p className="plan__terms">{free.terms}</p>
-            <p className="plan__list-title">{pricing.freeIncludesTitle}</p>
-            <ul className="plan__list">
-              {pricing.freeIncludes.map((item) => (
-                <li key={item}>
-                  <CheckIcon />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="plan__list-title">{pricing.freeExcludesTitle}</p>
-            <ul className="plan__list plan__list--off">
-              {pricing.freeExcludes.map((item) => (
-                <li key={item}>
-                  <DashIcon />
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div className="plan__includes">
+              <p className="plan__list-title">{pricing.freeIncludesTitle}</p>
+              <ul className="plan__list">
+                {pricing.freeIncludes.map((item) => (
+                  <li key={item}>
+                    <CheckIcon />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <div className="plans__paid">
@@ -75,20 +71,22 @@ export function Pricing() {
               {paid.map((plan) => (
                 <div key={plan.id} className={cn("plan", `plan--${plan.id}`)}>
                   {plan.id === "pass" && <Clip pin="pass" />}
-                  <h3 className="plan__name">
-                    {plan.name}
-                    {"badge" in plan && <span className="plan__badge">{plan.badge}</span>}
-                  </h3>
-                  <p className="plan__price">
-                    <span className="figure">{plan.price}</span>
-                    <span className="plan__cadence">{plan.cadence}</span>
-                  </p>
-                  {"perDay" in plan && (
-                    <p className="plan__per-day">
-                      {plan.perDay} {pricing.perDay}
+                  <div className="plan__top">
+                    <h3 className="plan__name">
+                      {plan.name}
+                      {"badge" in plan && <span className="plan__badge">{plan.badge}</span>}
+                    </h3>
+                    <p className="plan__price">
+                      <span className="figure">{plan.price}</span>
+                      <span className="plan__cadence">{plan.cadence}</span>
                     </p>
-                  )}
-                  <p className="plan__summary">{plan.summary}</p>
+                    {"perDay" in plan && (
+                      <p className="plan__per-day">
+                        {plan.perDay} {pricing.perDay}
+                      </p>
+                    )}
+                    <p className="plan__summary">{plan.summary}</p>
+                  </div>
                   <ButtonLink
                     href={APP_URLS.signUp}
                     variant={plan.id === "pass" ? "primary" : "secondary"}

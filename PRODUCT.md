@@ -8,7 +8,7 @@ web
 
 ## Users
 
-People in an active job search, applying to several roles at once and tailoring each application. The page is written for tech professionals applying to international and remote roles; many are Brazilian or Latin American and write in Portuguese or Spanish as well as English (confirmed 2026-10-30). Visitors arrive from search, social posts and, later, paid ads; most are on a phone.
+People in an active job search, applying to several roles at once and tailoring each application. The page is written for job seekers in any field, not for developers (changed 2026-10-31: "devs can do their own stuff with AI"); many apply to international and remote roles, and many are Brazilian or Latin American and write in Portuguese or Spanish as well as English (confirmed 2026-10-30). Visitors arrive from search, social posts and, later, paid ads; most are on a phone.
 
 ## Product Purpose
 
@@ -45,12 +45,12 @@ Checked against `../cvsapiens` on 2026-10-30:
 ## Brand Commitments
 
 - Name and wordmark "cv sapiens" and the monkey mascot.
-- Hand-drawn black-ink illustrations with an orange accent, from `../cvsapiens/public/illustrations`.
+- Hand-drawn black-ink illustrations with an orange accent, copied from `../cvsapiens/public/illustrations`, but only ones the app itself does not show (2026-10-31), so the page never repeats a screen from the product. The old page's arch scenes (`illustration-sapien-how-it-works-*`) are not used; its sapien heads, shapes and banner are.
 - Visual world: the app's palette and type (warm paper, ink, burnt orange, Zilla Slab for titles, Google Sans Flex for working text). Some of the landing page's earlier personality is kept as accents: the coloured shapes and the mascot avatar banner (confirmed 2026-10-30).
 
 ## Evidence on Hand
 
-- The product itself: job match wording, the kit progress scene, templates, plans. Example data in demonstrations must be labelled as an example.
+- The product itself: job match wording, the kit progress scene, templates, plans. Demonstrations follow one made-up application set in the US (Rachel Morgan of Austin, TX, applying to be a Customer Success Manager at Fieldnote; the user asked for US examples, not Brazilian ones, on 2026-10-31); at the user's request (2026-10-31) it carries no visible "Example" stamp or note. The template sample in `public/showcase` is rendered by the app's own templates.
 - Research: `research/landing-page-conversion.md`, `research/resume-builder-landing-pages.md`.
 - **None of these exist, and none may be invented:** testimonials, customer or employer logos, user counts, ratings, reviews, outcome statistics (confirmed 2026-10-30).
 

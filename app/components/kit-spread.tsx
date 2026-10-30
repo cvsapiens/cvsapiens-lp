@@ -2,7 +2,7 @@ import { content } from "../content/en";
 import { Thread, type ThreadStop } from "./thread";
 import { Clip, StatusDot } from "./ui";
 
-const { kit, example } = content;
+const { kit } = content;
 
 // Down the left margin, across to the clip holding the resume, then behind the papers to the next gap.
 const THREAD: ThreadStop[] = [
@@ -42,7 +42,7 @@ function Labels({ ids, side }: { ids: Array<Item["id"]>; side: "left" | "right" 
 /** The finished kit laid out on the desk: the documents at their own scale, labelled around them. */
 export function KitSpread() {
   return (
-    <section className="band band--deep" aria-labelledby="kit-title">
+    <section className="band" aria-labelledby="kit-title">
       <div className="container lane">
         <Thread stops={THREAD} />
         <div className="section-head section-head--center">
@@ -59,7 +59,6 @@ export function KitSpread() {
           <div className="spread__desk" role="group" aria-label={kit.label}>
             <article className="spread__resume doc">
               <Clip pin="desk" />
-              <span className="stamp">{example.stamp}</span>
               <p className="resume__name">{kit.resume.name}</p>
               <p className="resume__role">{kit.resume.role}</p>
               <p className="resume__contact">{kit.resume.contact}</p>
@@ -109,7 +108,7 @@ export function KitSpread() {
 
             <div className="spread__card app-card doc">
               <span className="app-card__mark" aria-hidden>
-                LP
+                {kit.card.company.slice(0, 2).toUpperCase()}
               </span>
               <span className="app-card__text">
                 <span className="app-card__role">{kit.card.role}</span>

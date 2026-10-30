@@ -1,8 +1,9 @@
+import Image from "next/image";
 import { content } from "../content/en";
 import { SuggestionDemo } from "./suggestion-demo";
 import { Thread, type ThreadStop } from "./thread";
 
-const { howItWorks, example } = content;
+const { howItWorks, showcase } = content;
 
 // In from above the third step, along the row of step pins like a line, out down the left margin.
 const THREAD: ThreadStop[] = [
@@ -18,7 +19,6 @@ function PasteMock() {
   const { paste } = howItWorks;
   return (
     <div className="paste doc">
-      <span className="stamp">{example.stamp}</span>
       <p className="doc__kind">{paste.label}</p>
       <div className="paste__box">
         <p className="paste__text">{paste.text}</p>
@@ -29,33 +29,37 @@ function PasteMock() {
   );
 }
 
-function BoardMock() {
-  const { board } = howItWorks;
+/** The tailored copy as a file: a thumbnail of the real template page, its name and formats. */
+function DownloadMock() {
+  const { download } = howItWorks;
   return (
-    <div className="mini-board" role="group" aria-label={board.label}>
-      {board.columns.map((column) => (
-        <div key={column.title} className="mini-board__column">
-          <p className="mini-board__title">{column.title}</p>
-          {column.cards.map((card) => (
-            <div key={card.company} className="app-card doc">
-              <span className="app-card__mark" aria-hidden>
-                {card.company.slice(0, 2).toUpperCase()}
-              </span>
-              <span className="app-card__text">
-                <span className="app-card__role">{card.role}</span>
-                <span className="app-card__company">{card.company}</span>
-              </span>
-              <span className={`pill pill--${card.tone}`}>{card.pill}</span>
-              <span className="app-card__meta">{card.meta}</span>
-            </div>
-          ))}
-        </div>
-      ))}
+    <div className="download doc">
+      <p className="doc__kind">{download.label}</p>
+      <div className="download__file">
+        <Image
+          src={showcase.image.src}
+          alt=""
+          width={showcase.image.width}
+          height={showcase.image.height}
+          sizes="4.5rem"
+          className="download__thumb"
+        />
+        <span className="download__text">
+          <span className="download__name">{download.file}</span>
+          <span className="download__meta">{showcase.thumbCaption}</span>
+        </span>
+      </div>
+      <p className="download__formats">
+        {download.formats.map((format) => (
+          <span key={format}>{format}</span>
+        ))}
+      </p>
+      <p className="paste__hint">{download.hint}</p>
     </div>
   );
 }
 
-const VISUALS = [<PasteMock key="paste" />, <SuggestionDemo key="suggest" />, <BoardMock key="board" />];
+const VISUALS = [<PasteMock key="paste" />, <SuggestionDemo key="suggest" />, <DownloadMock key="download" />];
 
 export function HowItWorks() {
   return (

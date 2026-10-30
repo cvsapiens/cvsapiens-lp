@@ -14,7 +14,7 @@ const THREAD: ThreadStop[] = [
 
 export function Faq() {
   return (
-    <section id="faq" className="band" aria-labelledby="faq-title">
+    <section id="faq" className="band band--deep" aria-labelledby="faq-title">
       <div className="container lane faq">
         <Thread stops={THREAD} />
         <div className="faq__intro">
@@ -22,11 +22,10 @@ export function Faq() {
             {faq.title}
           </h2>
           <Image
-            src="/illustrations/notifications-empty.png"
+            src="/illustration-icons-lp-svg/sapien-thinking.svg"
             alt=""
-            width={1536}
-            height={1024}
-            sizes="(min-width: 1024px) 380px, 70vw"
+            width={278}
+            height={255}
             className="faq__art"
           />
         </div>

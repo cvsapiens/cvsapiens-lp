@@ -60,14 +60,6 @@ export function CheckIcon() {
   );
 }
 
-export function DashIcon() {
-  return (
-    <svg className="icon" viewBox="0 0 20 20" aria-hidden focusable="false">
-      <path d="M5 10h10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 export function StatusDot({ status }: { status: string }) {
   return <span className={cn("status-dot", `status-dot--${status}`)} aria-hidden />;
 }

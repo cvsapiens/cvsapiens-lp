@@ -13,9 +13,9 @@ export const APP_URLS = {
 
 export const content = {
   meta: {
-    title: "cv sapiens | A tailored resume, cover letter and interview prep for every job",
+    title: "cv sapiens | Tailor your resume to every job you apply to",
     description:
-      "Paste a job description and get a resume tailored to it, a matching cover letter, a tracked application and interview prep. Free plan, no card needed.",
+      "Paste a job description and get suggestions that tailor your resume to it, in the job's own words. You keep the ones that are true. 22 designed templates, free plan, no card needed.",
   },
 
   nav: {
@@ -33,61 +33,58 @@ export const content = {
   },
 
   hero: {
-    title: "Paste the job. Get the whole application.",
-    lead: "A resume tailored to the posting, a cover letter that matches it, a card on your board and interview prep for that one job.",
+    title: "Paste the job. Get your resume tailored to it.",
+    lead: "cv sapiens compares your resume with the posting and suggests changes in the job's own words. You keep the ones that are true.",
     primary: "Start free",
     secondary: "See how it works",
-    reassurance: "Free plan, no card needed. Application kits from $9.90 for 5 days, and the pass doesn't renew.",
   },
 
-  // The example application the page follows. Every name and number in it is made up.
+  // The application the page follows, a non-tech role on purpose. Every name and number in it
+  // is made up; the demo film and the template sample in public/showcase use the same person.
   example: {
-    stamp: "Example",
     posting: {
-      label: "Example job posting",
+      label: "Sample job posting",
       kind: "Job posting",
-      title: "Senior Backend Engineer",
-      company: "Lumen Pay",
-      meta: "Remote, EU time zones · Fintech",
-      intro: "Build the services that move money for small businesses across Europe.",
+      title: "Customer Success Manager",
+      company: "Fieldnote",
+      meta: "Remote, US time zones · B2B software",
+      intro: "Help 9,000 small service businesses get set up and keep growing with our scheduling software.",
       requirementsTitle: "What you'll need",
       requirements: [
-        "5+ years building backend services in [Python]",
-        "[PostgreSQL] at scale",
-        "[Event streaming] with Kafka",
-        "[AWS] in production",
-        "[Payments] or ledger systems",
-        "[On-call] experience",
+        "3+ years in [customer success] or account management",
+        "[Onboarding] new customers",
+        "[HubSpot] or Salesforce",
+        "[Renewals] and upsells",
+        "[Churn] and health-score reporting",
+        "Fluent [English]; Spanish a plus",
       ],
     },
     scene: {
-      label: "The application kit being made from the example posting",
+      label: "The application kit being made from the sample posting",
       steps: ["Tailoring your resume to the job", "Writing the cover letter", "Adding the application to your board"],
       done: "Kit ready: resume, cover letter and a card on your board",
       replay: "Play again",
       applied: "Applied",
-      company: "Lumen Pay",
+      company: "Fieldnote",
     },
-    note: "Made-up example. Your kit uses your resume and the job you paste.",
   },
 
-  // The hero's demo film: the real app, recorded with the example posting above.
+  // The hero's demo film: the real app, recorded with the posting above.
   demo: {
     label:
-      "Product demo, 40 seconds: the example posting is pasted into CV Sapiens and becomes a tailored resume, a cover letter, a card on the board and interview prep",
+      "Product demo, 40 seconds: the posting is pasted into cv sapiens and becomes a tailored resume, a cover letter, a card on the board and interview prep",
     watch: "Watch with sound",
     length: "0:40",
     pause: "Pause the demo",
     play: "Play the demo",
     captions: "English",
-    note: "The real app, with made-up example data. Your kit uses your resume and the job you paste.",
   },
 
   problem: {
     title: "Every job asks for something a little different.",
     body: [
       "Recruiters, and the software they use, search for the job's own words: its title, its tools, its requirements.",
-      "A resume written for “any backend role” says those things in other words, or not at all. Tailoring it fixes that, but doing it by hand takes an evening per application.",
+      "A resume written for “any account role” says those things in other words, or not at all. Tailoring it fixes that, but doing it by hand takes an evening per application.",
     ],
     compare: {
       caption: "Your base resume against this job",
@@ -95,22 +92,22 @@ export const content = {
       resumeColumn: "Your resume says",
       statusColumn: "Job match",
       rows: [
-        { job: "PostgreSQL at scale", resume: "Tuned PostgreSQL for the ledger", status: "found", label: "Found" },
-        { job: "Event streaming with Kafka", resume: "Worked on the messaging system", status: "missing", label: "Not found as written" },
-        { job: "On-call experience", resume: "Nothing yet", status: "missing", label: "Not found as written" },
+        { job: "HubSpot or Salesforce", resume: "Managed 120 accounts in HubSpot", status: "found", label: "Found" },
+        { job: "Onboarding new customers", resume: "Helped new clients get started", status: "missing", label: "Not found as written" },
+        { job: "Renewals and upsells", resume: "Nothing yet", status: "missing", label: "Not found as written" },
       ],
       titleNote: {
         before: "The job is ",
-        job: "Senior Backend Engineer",
+        job: "Customer Success Manager",
         middle: "; your resume says ",
-        resume: "Software Engineer",
+        resume: "Account Manager",
         after: ". Recruiters search by title, so use theirs if it's true for you.",
       },
     },
   },
 
   howItWorks: {
-    title: "One posting in. Everything for that job out.",
+    title: "One posting in. A tailored resume out.",
     lead: "Three steps, and the first one is a paste.",
     steps: [
       {
@@ -118,52 +115,66 @@ export const content = {
         body: "The whole posting: responsibilities, requirements, about the team. cv sapiens reads what the job asks for.",
       },
       {
-        title: "Keep the changes you agree with",
-        body: "You get a tailored copy of your resume, a matching cover letter and the job match. Each suggested change waits for your yes.",
+        title: "Keep the suggestions you agree with",
+        body: "Each change is written in the job's own words and says why. Nothing changes until you say yes.",
       },
       {
-        title: "Apply, track and prepare",
-        body: "Download PDF or Word, send it, and move the card along your board. When an interview is booked, prepare for that job.",
+        title: "Download it in a template",
+        body: "Your tailored copy as PDF or Word, in any of 22 templates. Your base resume stays as it is.",
       },
     ],
     paste: {
       label: "Job description",
-      text: "Senior Backend Engineer, Lumen Pay. Remote, EU time zones. You'll build the services that move money for small businesses across Europe. What you'll need: 5+ years building backend services in Python, PostgreSQL at scale, event streaming with Kafka…",
-      counts: "2,184 characters • 341 words",
+      text: "Customer Success Manager, Fieldnote. Remote, US time zones. Fieldnote makes scheduling and booking software for 9,000 small service businesses. What you'll need: 3+ years in customer success or account management, onboarding new customers, HubSpot or Salesforce…",
+      counts: "953 characters • 161 words",
       hint: "The more of the posting you paste, the closer the tailoring.",
     },
     suggestion: {
-      where: "Employment · Fintech Brasil",
-      before: "Worked on the messaging system for payments.",
-      after: "Ran event streaming with Kafka for the payment services.",
-      why: "The job asks for “event streaming with Kafka”. Your resume already lists Kafka under Skills.",
+      where: "Employment · Bookwell",
+      before: "Helped new clients get started with the platform.",
+      after: "Ran customer onboarding for 40+ new accounts a quarter.",
+      why: "The job asks for “onboarding new customers”. Your summary already says you brought 40+ new accounts on board each quarter.",
       keep: "Keep",
       skip: "Skip",
       undo: "Undo",
       kept: "Kept",
       skipped: "Skipped",
       matchLabel: "Job match",
-      matchOf: "of 12 required shown",
-      groupLabel: "Example suggested change",
+      matchOf: "of 6 required shown",
+      groupLabel: "Suggested change",
     },
-    board: {
-      columns: [
-        {
-          title: "Applied",
-          cards: [{ company: "Lumen Pay", role: "Senior Backend Engineer", pill: "Applied", tone: "applied", meta: "Resume · tailored · Cover letter" }],
-        },
-        {
-          title: "Screening",
-          cards: [{ company: "Northwind", role: "Platform Engineer", pill: "Screening", tone: "screening", meta: "Interview Tue 14:00 · Prep ready" }],
-        },
-      ],
-      label: "Example job-search board",
+    download: {
+      label: "Your tailored copy",
+      file: "Rachel-Morgan-Fieldnote.pdf",
+      formats: ["PDF", "DOCX", "TXT"],
+      hint: "Saved with this job, next to the posting you pasted.",
     },
   },
 
+  // A real page from the app: the tailored resume above, rendered by one of the app's templates
+  // (public/showcase). Regenerate it from ../cvsapiens when the templates change.
+  showcase: {
+    title: "A resume that looks the part.",
+    lead: "Pick any of the 22 templates, then change colours, fonts and spacing. Each one is designed for people to read and tested so software reads back every word.",
+    points: [
+      "22 templates, from classic to bold",
+      "PDF and Word files, each under 2.5 MB",
+      "Every template is on the free plan",
+    ],
+    primary: "Start free",
+    sample: "Download this resume (PDF)",
+    image: { src: "/showcase/rachel-morgan-slant-navy.png", width: 1800, height: 2546 },
+    // A second template fanned behind the first, to show there is more than one look.
+    behind: { src: "/showcase/rachel-morgan-poster.png", width: 1800, height: 2546 },
+    pdf: "/showcase/rachel-morgan-slant-navy.pdf",
+    alt: "Rachel Morgan's one-page resume for the Customer Success Manager job, in the Slant template with a navy header",
+    caption: "Slant in Navy professional, with Poster behind it",
+    thumbCaption: "Slant template · 1 page",
+  },
+
   kit: {
-    title: "What's in an application kit",
-    lead: "Everything hangs off the job you pasted, so nothing ends up in a spreadsheet.",
+    title: "Everything else that job needs",
+    lead: "On a paid plan each posting becomes a kit around the tailored resume, so nothing ends up in a spreadsheet.",
     items: [
       { id: "resume", title: "A tailored resume", body: "A copy of your base resume, tailored to this job. Your original stays as it is." },
       { id: "match", title: "The job match", body: "Which of the job's requirements your resume shows, as written or in other words, and which it doesn't yet." },
@@ -173,44 +184,44 @@ export const content = {
       { id: "export", title: "Ready to send", body: "PDF, Word and a packet with everything for this application." },
     ],
     resume: {
-      name: "Ana Souza",
-      role: "Senior Backend Engineer",
-      contact: "Porto Alegre, Brazil · Remote · ana.souza@example.com",
+      name: "Rachel Morgan",
+      role: "Customer Success Manager",
+      contact: "Austin, TX · Remote · rachel.morgan@example.com",
       summaryTitle: "Professional Summary",
-      summary: "Backend engineer with seven years in Python and PostgreSQL, the last three running payment services at a Brazilian fintech.",
+      summary: "Account manager with six years in B2B software, the last three looking after 120 small-business accounts and bringing 40+ new ones on board each quarter.",
       historyTitle: "Employment History",
-      jobTitle: "Senior Software Engineer, Fintech Brasil",
-      jobDates: "Jul 2022 – Present",
+      jobTitle: "Account Manager, Bookwell",
+      jobDates: "Mar 2021 – Present",
       bullets: [
-        "Ran event streaming with Kafka for the payment services.",
-        "Tuned PostgreSQL for the ledger, cutting report times from minutes to seconds.",
-        "Built the refunds service in Python on AWS.",
+        "Ran customer onboarding for 40+ new accounts a quarter.",
+        "Managed a book of 120 small-business accounts in HubSpot.",
+        "Built monthly churn and retention reports for the leadership team.",
       ],
     },
     letter: {
-      greeting: "Dear Lumen Pay team,",
-      body: "For the last three years I have run the payment services behind a Brazilian fintech, in Python, PostgreSQL and Kafka.",
+      greeting: "Dear Fieldnote team,",
+      body: "For the last three years I have looked after 120 small-business accounts at a scheduling software company, from the first onboarding call onward.",
     },
     match: {
       title: "Job match",
-      found: "9",
-      of: "of 12 required shown",
+      found: "5",
+      of: "of 6 required shown",
       rows: [
-        { requirement: "Python", label: "Found", status: "found" },
-        { requirement: "Event streaming", label: "Found as “Kafka”", status: "found" },
-        { requirement: "PostgreSQL at scale", label: "Found", status: "found" },
-        { requirement: "On-call experience", label: "Not found as written", status: "missing" },
+        { requirement: "Account management", label: "Found as a synonym", status: "found" },
+        { requirement: "Customer onboarding", label: "Found", status: "found" },
+        { requirement: "HubSpot", label: "Found", status: "found" },
+        { requirement: "Renewals and upsells", label: "Not found as written", status: "missing" },
       ],
       footnote: "Matched on the job's own words and known synonyms, without AI.",
     },
     prep: {
       title: "Interview prep",
-      question: "How would you design a ledger that never loses a payment?",
-      tip: "Story to tell: tuning PostgreSQL for the ledger.",
+      question: "Tell us about an account that was about to leave. What did you do?",
+      tip: "Story to tell: the retention reports that flagged at-risk accounts early.",
     },
-    card: { company: "Lumen Pay", role: "Senior Backend Engineer", pill: "Applied" },
+    card: { company: "Fieldnote", role: "Customer Success Manager", pill: "Applied" },
     exports: ["PDF", "DOCX", "Packet"],
-    label: "Example application kit",
+    label: "Sample application kit",
   },
 
   honest: {
@@ -236,41 +247,6 @@ export const content = {
       {
         title: "Your resume isn't training data",
         body: "We don't use your resume to train AI models, and we don't sell your data.",
-      },
-    ],
-  },
-
-  abroad: {
-    title: "Applying abroad? Write it in the job's language.",
-    body: "Each document can be in English, Brazilian Portuguese or Spanish. Section titles, dates and letter wording follow its language, and the app itself speaks all three.",
-    label: "Document language",
-    languages: [
-      {
-        id: "en",
-        name: "English",
-        summary: "Professional Summary",
-        history: "Employment History",
-        skills: "Skills",
-        dates: "Jul 2022 – Present",
-        salutation: "Dear Hiring Team,",
-      },
-      {
-        id: "pt-BR",
-        name: "Português",
-        summary: "Resumo Profissional",
-        history: "Experiência Profissional",
-        skills: "Habilidades",
-        dates: "jul 2022 – Atual",
-        salutation: "Prezada equipe de recrutamento,",
-      },
-      {
-        id: "es",
-        name: "Español",
-        summary: "Perfil Profesional",
-        history: "Experiencia Laboral",
-        skills: "Habilidades",
-        dates: "jul 2022 – Actualidad",
-        salutation: "Estimado equipo de selección:",
       },
     ],
   },
@@ -323,9 +299,13 @@ export const content = {
       },
     ],
     freeIncludesTitle: "Free includes",
-    freeIncludes: ["1 resume and 1 cover letter", "Resume and cover letter editors", "Download as TXT"],
-    freeExcludesTitle: "Not on Free",
-    freeExcludes: ["PDF and Word downloads", "Application kits, job match and AI"],
+    freeIncludes: [
+      "1 resume and 1 cover letter",
+      "All 22 professionally designed templates",
+      "Colours, fonts and spacing to make it yours",
+      "Resume and cover letter editors",
+      "Download as TXT",
+    ],
     premiumTitle: "Every paid plan, the pass included",
     premiumIncludes: [
       "Application kits: a tailored resume and cover letter per job",
@@ -397,7 +377,7 @@ export const content = {
   },
 
   footer: {
-    tagline: "One job description in. The whole application out.",
+    tagline: "Your resume, tailored to every job you apply to.",
     cast: "The cv sapiens cast",
     links: [
       { label: "How it works", href: "#how-it-works" },

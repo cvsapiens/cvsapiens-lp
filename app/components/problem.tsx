@@ -1,9 +1,8 @@
-import Image from "next/image";
 import { content } from "../content/en";
 import { Thread, type ThreadStop } from "./thread";
 import { StatusDot } from "./ui";
 
-const { problem, example } = content;
+const { problem } = content;
 
 const THREAD: ThreadStop[] = [{ x: 1.035, y: 0 }, { pin: "compare" }, { x: 0.75, fromBottom: 0 }];
 
@@ -22,18 +21,9 @@ export function Problem() {
               {paragraph}
             </p>
           ))}
-          <Image
-            src="/illustrations/ai-job-analysis.png"
-            alt=""
-            width={1536}
-            height={1024}
-            sizes="(min-width: 1024px) 420px, 80vw"
-            className="problem__art"
-          />
         </div>
         <figure className="compare doc">
           <span className="pin" data-thread-pin="compare" aria-hidden />
-          <span className="stamp">{example.stamp}</span>
           <figcaption className="doc__kind">{compare.caption}</figcaption>
           <table className="compare__table">
             <thead>

@@ -34,6 +34,13 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
   --gutter: clamp(1rem, 4vw, 2.5rem);
+  /* Spacing roles, smallest to largest, so nothing inside a section is ever as loose as the
+     space between sections: a heading block and what it introduces < sibling groups inside
+     a section < the band's own padding. 32 → 56, 40 → 64, 56 → 96 from phone to desktop. */
+  --space-head: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  --space-group: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+  --space-section: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  --space-columns: clamp(3rem, 6vw, 6rem);
   --shadow-doc: 0 1px 2px rgb(30 30 30 / 0.06), 0 22px 40px -24px rgb(70 45 25 / 0.38);
 
   color-scheme: light;
@@ -371,7 +378,7 @@ a {
 
 .lane {
   position: relative;
-  padding-block: clamp(4.5rem, 3rem + 6vw, 8.5rem);
+  padding-block: var(--space-section);
 }
 
 .lane > :not(.thread) {
@@ -382,7 +389,7 @@ a {
 .section-head {
   display: grid;
   gap: 1rem;
-  margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem);
+  margin-bottom: var(--space-head);
 }
 
 .section-head--center {
@@ -581,21 +588,6 @@ a {
   color: var(--muted);
 }
 
-.stamp {
-  position: absolute;
-  top: 0.875rem;
-  right: 0.875rem;
-  padding: 0.125rem 0.5rem;
-  border: 1.5px solid var(--muted);
-  border-radius: 4px;
-  color: var(--muted);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transform: rotate(4deg);
-}
-
 mark {
   background: var(--mark);
   color: var(--ink);
@@ -674,16 +666,11 @@ mark {
   background: var(--missing-bg);
 }
 
-.example-note {
-  font-size: 0.8125rem;
-  color: var(--muted);
-}
-
 /* ---------- Hero ---------- */
 
 .hero .lane,
 .hero__grid {
-  padding-block: clamp(1.5rem, 1rem + 2vw, 2.5rem) clamp(4rem, 3rem + 4vw, 6.5rem);
+  padding-block: clamp(1.5rem, 1rem + 2vw, 2.5rem) var(--space-section);
 }
 
 .hero__grid {
@@ -876,7 +863,6 @@ mark {
 }
 
 .posting__title {
-  padding-right: 5.5rem;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 1.75rem;
@@ -963,7 +949,7 @@ mark {
       "posting copy"
       "posting scene";
     grid-template-rows: auto 1fr;
-    column-gap: clamp(3rem, 6vw, 6rem);
+    column-gap: var(--space-columns);
     row-gap: 2rem;
   }
 
@@ -1374,6 +1360,7 @@ mark {
 
 /* ---------- Problem ---------- */
 
+/* On phones the comparison's pin hangs on a 2.25rem string; 3rem keeps it clear of the text above. */
 .problem {
   display: grid;
   gap: 3rem;
@@ -1383,11 +1370,6 @@ mark {
 .problem__text {
   display: grid;
   gap: 1.25rem;
-}
-
-.problem__art {
-  width: min(100%, 26rem);
-  margin-top: 0.5rem;
 }
 
 .compare {
@@ -1464,7 +1446,7 @@ mark {
 @media (min-width: 1024px) {
   .problem {
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    column-gap: clamp(3rem, 6vw, 6rem);
+    column-gap: var(--space-columns);
   }
 
   .compare {
@@ -1477,7 +1459,7 @@ mark {
 
 .steps {
   display: grid;
-  gap: 3.5rem;
+  gap: var(--space-group);
   counter-reset: step;
 }
 
@@ -1544,6 +1526,50 @@ mark {
   margin-top: 0.75rem;
   font-size: 0.875rem;
   color: var(--ink-2);
+}
+
+.download {
+  padding: 1.25rem;
+}
+
+.download__file {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-top: 0.625rem;
+  padding: 0.625rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+}
+
+.download__thumb {
+  width: 3.25rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgb(30 30 30 / 0.08);
+}
+
+.download__text {
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.download__name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.download__meta {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.download__formats {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .suggest {
@@ -1635,28 +1661,6 @@ mark {
   }
 }
 
-.mini-board {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-  padding: 0.875rem;
-  border-radius: 12px;
-  background: var(--paper-deep);
-  border: 1px solid var(--border);
-}
-
-.mini-board__column {
-  display: grid;
-  align-content: start;
-  gap: 0.5rem;
-}
-
-.mini-board__title {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--ink-2);
-}
-
 .app-card {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -1719,6 +1723,100 @@ mark {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
     column-gap: clamp(2rem, 3.5vw, 3.5rem);
     align-items: start;
+  }
+}
+
+/* ---------- Showcase: a real page from a template ---------- */
+
+/* The fanned, rotated sheets can reach past a phone's edge; never let them scroll the page. */
+.showcase-band {
+  overflow-x: clip;
+}
+
+.showcase {
+  display: grid;
+  gap: var(--space-head);
+  align-items: center;
+}
+
+.showcase__page {
+  display: grid;
+  gap: 0.875rem;
+  justify-items: center;
+  margin: 0;
+}
+
+/* Two real pages fanned like papers on a desk: the template on show, another behind it. */
+.showcase__stack {
+  position: relative;
+  width: min(78%, 30rem);
+  margin: 0 auto 1.5rem;
+  translate: 6% 0;
+}
+
+.showcase__sheet {
+  position: relative;
+  padding: 0;
+  overflow: visible;
+  rotate: -2deg;
+}
+
+/* Fanned out to the left, so the second template's big stacked name shows past the first. */
+.showcase__sheet--behind {
+  position: absolute;
+  inset: 0;
+  translate: -20% 3%;
+  rotate: -7deg;
+  box-shadow: 0 1px 2px rgb(30 30 30 / 0.06), 0 12px 28px -20px rgb(70 45 25 / 0.3);
+}
+
+.showcase__sheet img {
+  width: 100%;
+  border-radius: inherit;
+}
+
+.showcase__caption {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.showcase__text {
+  display: grid;
+  gap: 1.25rem;
+  align-content: center;
+}
+
+.showcase__points {
+  display: grid;
+  gap: 0.625rem;
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  color: var(--ink-2);
+}
+
+.showcase__points li {
+  display: flex;
+  gap: 0.625rem;
+  align-items: flex-start;
+}
+
+.showcase__points .icon {
+  margin-top: 0.2rem;
+  color: var(--found);
+}
+
+.showcase__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .showcase {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    column-gap: var(--space-columns);
   }
 }
 
@@ -1935,6 +2033,7 @@ mark {
   gap: 0.5rem;
 }
 
+.download__formats span,
 .spread__exports span {
   padding: 0.25rem 0.625rem;
   border: 1px solid var(--border-strong);
@@ -2037,7 +2136,7 @@ mark {
 
 .honest {
   display: grid;
-  gap: 3rem;
+  gap: var(--space-group);
 }
 
 .honest__intro {
@@ -2047,11 +2146,8 @@ mark {
 }
 
 .honest__art {
-  width: min(100%, 26rem);
+  width: min(100%, 24rem);
   margin-top: 0.5rem;
-  padding: 1.5rem 1rem 0;
-  background:
-    radial-gradient(closest-side, var(--scene-stage) 99%, transparent) 50% 70% / 92% 88% no-repeat;
 }
 
 .honest__list {
@@ -2074,88 +2170,17 @@ mark {
   max-width: 34rem;
 }
 
-.abroad {
-  display: grid;
-  gap: 2rem;
-  align-items: center;
-  padding-top: 1rem;
-}
-
-.abroad__text {
-  display: grid;
-  gap: 1rem;
-}
-
-.lang {
-  display: grid;
-  gap: 1rem;
-  justify-items: start;
-}
-
-.segmented {
-  display: inline-flex;
-  padding: 3px;
-  border-radius: 10px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-}
-
-.segmented__item {
-  min-height: 2.25rem;
-  padding: 0 0.875rem;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  color: var(--muted);
-  font: inherit;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 150ms ease-out, color 150ms ease-out;
-}
-
-.segmented__item:hover {
-  color: var(--ink);
-}
-
-.segmented__item--on {
-  background: var(--surface);
-  color: var(--ink);
-  box-shadow: 0 1px 2px rgb(30 30 30 / 0.12);
-}
-
-.lang__sheet {
-  width: 100%;
-  max-width: 26rem;
-  padding: 1.5rem 1.375rem;
-  font-size: 0.8125rem;
-}
-
-.lang__letter {
-  margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px dashed var(--border-strong);
-  font-size: 0.9375rem;
-  font-style: italic;
-  color: var(--ink-2);
-}
-
 @media (min-width: 1024px) {
   .honest {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    column-gap: clamp(3rem, 6vw, 6rem);
+    column-gap: var(--space-columns);
   }
 
-  .honest__intro {
+  /* `.lane > :not(.thread)` sets position: relative; match its specificity so this sticks. */
+  .lane > .honest__intro {
     position: sticky;
     top: 2rem;
-  }
-
-  .abroad {
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    column-gap: clamp(3rem, 6vw, 6rem);
-    margin-top: 2rem;
+    align-self: start;
   }
 }
 
@@ -2218,6 +2243,18 @@ mark {
 .plan--pass {
   background: color-mix(in oklab, var(--accent-soft) 45%, var(--surface));
   border-radius: 13px 13px 0 0;
+}
+
+.plan__top {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+}
+
+.plan__includes {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
 }
 
 .plan__name {
@@ -2310,14 +2347,6 @@ mark {
   color: var(--found);
 }
 
-.plan__list--off {
-  color: var(--muted);
-}
-
-.plan__list--off .icon {
-  color: var(--muted);
-}
-
 .plans__includes {
   padding: 1.5rem;
   border-top: 1px solid var(--border);
@@ -2345,6 +2374,16 @@ mark {
     border-left: 1px solid var(--border);
   }
 
+  /* The three paid plans share their rows, so the buttons line up. */
+  .plans__row {
+    grid-template-rows: auto auto auto;
+  }
+
+  .plans__row .plan {
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+  }
+
   .plan--pass {
     border-radius: 13px 0 0 0;
   }
@@ -2360,7 +2399,7 @@ mark {
 
   .pricing__art {
     display: block;
-    width: clamp(12rem, 20vw, 17rem);
+    width: clamp(12rem, 18vw, 16rem);
   }
 }
 
@@ -2375,21 +2414,71 @@ mark {
   }
 }
 
+/* Side by side, Free joins the same rows: top, button, terms, then what's included. Its
+   button lines up with the paid ones and its list starts level with "Every paid plan". */
+@media (min-width: 1024px) {
+  @supports (grid-template-columns: subgrid) {
+    .plans {
+      grid-template-columns: minmax(0, 1fr) repeat(3, minmax(0, 1.07fr));
+      grid-template-rows: repeat(4, auto);
+      align-items: stretch;
+      row-gap: 0;
+    }
+
+    .plan--free {
+      grid-column: 1;
+      grid-row: 1 / 5;
+      grid-template-rows: subgrid;
+    }
+
+    .plans__paid {
+      grid-column: 2 / 5;
+      grid-row: 1 / 5;
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-template-rows: subgrid;
+      gap: 0;
+    }
+
+    .plans__row {
+      display: contents;
+    }
+
+    .plans__row .plan {
+      grid-row: 1 / 4;
+    }
+
+    .plans__includes {
+      grid-column: 1 / -1;
+      grid-row: 4;
+    }
+
+    /* Level with the paid list's title: its 1.5rem padding and 1px rule, less the half row
+       gap the subgrid already adds above Free's list. */
+    .plan--free .plan__list-title {
+      margin-top: calc(1.5rem + 1px - 0.375rem);
+    }
+  }
+}
+
 /* ---------- FAQ ---------- */
 
 .faq {
   display: grid;
-  gap: 2.5rem;
+  gap: var(--space-head);
 }
 
+/* On phones the thinking sapien sits beside the heading instead of under it. */
 .faq__intro {
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1rem;
   align-content: start;
 }
 
 .faq__art {
-  width: min(100%, 22rem);
+  width: clamp(4.5rem, 18vw, 6rem);
 }
 
 .faq__list {
@@ -2450,12 +2539,20 @@ mark {
 @media (min-width: 1024px) {
   .faq {
     grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-    column-gap: clamp(3rem, 6vw, 6rem);
+    column-gap: var(--space-columns);
   }
 
-  .faq__intro {
+  .lane > .faq__intro {
     position: sticky;
     top: 2rem;
+    align-self: start;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 1.75rem;
+  }
+
+  .faq__art {
+    width: 8.5rem;
   }
 }
 
@@ -2467,12 +2564,13 @@ mark {
   align-items: center;
 }
 
+/* The earlier landing page's coral arch, as the stage the cast member opens the door on:
+   the scene stands at its foot, with the arch's dome rising behind it. */
 .final__art {
   width: min(100%, 26rem);
   justify-self: center;
-  padding: 30% 2rem 0;
-  /* The earlier landing page's coral arch, as the stage the cast member walks out of. */
-  background: url("/illustration-icons-lp-svg/iilustration-shape-one.svg") 50% 100% / 78% auto no-repeat;
+  padding: 28% 1.5rem 0;
+  background: url("/illustration-icons-lp-svg/iilustration-shape-one.svg") 50% 100% / 80% auto no-repeat;
 }
 
 .final__text {
@@ -2491,7 +2589,7 @@ mark {
 @media (min-width: 1024px) {
   .final__grid {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    column-gap: clamp(3rem, 6vw, 6rem);
+    column-gap: var(--space-columns);
   }
 
   .knot {
@@ -2503,14 +2601,13 @@ mark {
 /* ---------- Footer ---------- */
 
 .site-footer {
-  background: var(--paper-deep);
+  background: var(--paper);
 }
 
 .site-footer__cast {
   width: 100%;
   height: auto;
-  margin-bottom: -1px;
-  padding-top: 1rem;
+  padding-block: 1rem clamp(1rem, 2.5vw, 2rem);
 }
 
 .site-footer__band {

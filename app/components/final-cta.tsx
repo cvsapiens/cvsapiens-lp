@@ -10,15 +10,14 @@ const THREAD: ThreadStop[] = [{ x: 0.345, y: 0 }, { pin: "knot" }];
 
 export function FinalCta() {
   return (
-    <section className="band band--deep final" aria-labelledby="final-title" id="final-cta">
+    <section className="band final" aria-labelledby="final-title" id="final-cta">
       <div className="container lane final__grid">
         <Thread stops={THREAD} />
         <Image
-          src="/illustrations/account-welcome.png"
+          src="/illustrations/sign-in-required.svg"
           alt=""
-          width={1536}
+          width={1196}
           height={1024}
-          sizes="(min-width: 1024px) 460px, 80vw"
           className="final__art"
         />
         <div className="final__text">
