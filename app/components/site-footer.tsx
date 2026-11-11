@@ -21,7 +21,7 @@ export function SiteFooter() {
           <div>
             <Image
               src="/illustration-icons-lp-svg/logo-horizontal-white.svg"
-              alt="cv sapiens"
+              alt="CV Sapiens"
               width={656}
               height={92}
               className="site-footer__logo"

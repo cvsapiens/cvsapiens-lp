@@ -26,15 +26,41 @@ const slab = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://cvsapiens.com"),
+  applicationName: "CV Sapiens",
   title: content.meta.title,
   description: content.meta.description,
-  icons: { icon: "/favicon.png" },
+  icons: {
+    icon: [
+      { url: "/brand/favicon.svg", sizes: "any", type: "image/svg+xml" },
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/brand/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/brand/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/favicon.ico",
+  },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: content.meta.title,
     description: content.meta.description,
     url: "https://cvsapiens.com",
-    siteName: "cv sapiens",
+    siteName: "CV Sapiens",
     type: "website",
+    images: [
+      {
+        url: "/illustrations/empty-states/account-welcome.png",
+        width: 1200,
+        height: 630,
+        alt: "A CV Sapiens character waving hello",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: content.meta.title,
+    description: content.meta.description,
+    images: ["/illustrations/empty-states/account-welcome.png"],
   },
 };
 

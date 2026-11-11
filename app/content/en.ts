@@ -13,7 +13,7 @@ export const APP_URLS = {
 
 export const content = {
   meta: {
-    title: "cv sapiens | Tailor your resume to every job you apply to",
+    title: "CV Sapiens | Tailor your resume to every job you apply to",
     description:
       "Paste a job description and get suggestions that tailor your resume to it, in the job's own words. You keep the ones that are true. 22 designed templates, free plan, no card needed.",
   },
@@ -29,12 +29,12 @@ export const content = {
     startFree: "Start free",
     openMenu: "Open menu",
     closeMenu: "Close menu",
-    home: "cv sapiens home",
+    home: "CV Sapiens home",
   },
 
   hero: {
     title: "Paste the job. Get your resume tailored to it.",
-    lead: "cv sapiens compares your resume with the posting and suggests changes in the job's own words. You keep the ones that are true.",
+    lead: "CV Sapiens compares your resume with the posting and suggests changes in the job's own words. You keep the ones that are true.",
     primary: "Start free",
     secondary: "See how it works",
   },
@@ -72,7 +72,7 @@ export const content = {
   // The hero's demo film: the real app, recorded with the posting above.
   demo: {
     label:
-      "Product demo, 40 seconds: the posting is pasted into cv sapiens and becomes a tailored resume, a cover letter, a card on the board and interview prep",
+      "Product demo, 40 seconds: the posting is pasted into CV Sapiens and becomes a tailored resume, a cover letter, a card on the board and interview prep",
     watch: "Watch with sound",
     length: "0:40",
     pause: "Pause the demo",
@@ -112,7 +112,7 @@ export const content = {
     steps: [
       {
         title: "Paste the job description",
-        body: "The whole posting: responsibilities, requirements, about the team. cv sapiens reads what the job asks for.",
+        body: "The whole posting: responsibilities, requirements, about the team. CV Sapiens reads what the job asks for.",
       },
       {
         title: "Keep the suggestions you agree with",
@@ -378,7 +378,7 @@ export const content = {
 
   footer: {
     tagline: "Your resume, tailored to every job you apply to.",
-    cast: "The cv sapiens cast",
+    cast: "The CV Sapiens cast",
     links: [
       { label: "How it works", href: "#how-it-works" },
       { label: "Pricing", href: "#pricing" },
@@ -389,7 +389,7 @@ export const content = {
       { label: "Terms", href: APP_URLS.terms },
       { label: "Privacy", href: APP_URLS.privacy },
     ],
-    copyright: "© 2026 cv sapiens",
+    copyright: "© 2026 CV Sapiens",
   },
 } as const;
 
